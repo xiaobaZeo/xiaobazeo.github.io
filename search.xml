@@ -42,6 +42,35 @@
       </tags>
   </entry>
   <entry>
+    <title>TCP、IP、DNS</title>
+    <url>/2022/01/16/TCP%E3%80%81IP%E3%80%81DNS/</url>
+    <content><![CDATA[<p>你好，我是小八，最近在备考，考试总算是结束了，终于可以放假，学习更多的技术了<del>干自己想干的事情了</del></p>
+<p>下面分享一些 IP、TCP、DNS 的基础知识点，大家可以看看，绝对通俗易懂！！！</p>
+<h1 id="与-HTTP-关系密切的协议：IP、TCP-和-DNS"><a href="#与-HTTP-关系密切的协议：IP、TCP-和-DNS" class="headerlink" title="与 HTTP 关系密切的协议：IP、TCP 和 DNS"></a>与 HTTP 关系密切的协议：IP、TCP 和 DNS</h1><h4 id="负责传输的-IP-协议："><a href="#负责传输的-IP-协议：" class="headerlink" title="负责传输的 IP 协议："></a>负责传输的 IP 协议：</h4><p>&emsp;&emsp;按层次分，IP（Internet Protocol）网际协议属于网络层。<strong>IP 地址</strong>和<strong>IP</strong>不同，“IP”其实就是一种协议的名称，即：网际协议。</p>
+<p>&emsp;&emsp;IP 协议作用：把各种<strong>数据包</strong>传送给对方，但是必须满足<strong>IP 地址</strong>和<strong>MAC 地址</strong>（Media Access Control Address）两个条件才能确实送到对方那里。</p>
+<p>&emsp;&emsp;<strong>IP 地址</strong>：节点被分配到的地址，</p>
+<p>&emsp;&emsp;<strong>MAC 地址</strong>：网卡所属的固定地址。</p>
+<p>&emsp;&emsp;<strong>注意：</strong> IP 地址可以变换，MAC 地址基本不变。</p>
+<p>&emsp;&emsp;IP 通信依赖 MAC 地址, 因为不同计算机之间通信时，通常是不在一个局域网(LAN)下，此时就需要多个中间计算机和设备（路由器等均可作为中转设备）进行中转，最后连接到你所需要连接的计算机，在中转的过程中，会利用到下一个中转设备的 MAC 地址来寻找到下一个中转目标。这下就要用到了<strong>ARP 协议</strong>(Address Resolution Protocol).</p>
+<p>&emsp;&emsp;<strong>ARP 协议：</strong> 一种解析地址的协议，根据对方的 IP 地址可以反查出对应的 MAC 地址。</p>
+<p>&emsp;&emsp;如果还是不懂的话，就拿快递公司的收发货方式来打一个比方吧，我们要是双十一买了东西（“东西”就是我们在网络上要传递给某个设备的信息），卖家需要把东西寄给我们（”我们“就是接收信息的设备），那么他们就会把自己的货物送到某快递的集散中心，然后集散中心通过核对收件人地址，来确定送到下一个集散中心（这里的“集散中心”就是类似于一个中转设备），最后到达离收件地址最近的集散中心之后，再送到我们手上（这时候就实现了发起设备和接收设备的信息传递）。</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/IP%E3%80%81TCP%E5%92%8CDNS/ARP%E5%8D%8F%E8%AE%AE.png?versionId=CAEQGRiBgID_98q58hciIGU2NDAxY2JlNmQ5MzQ2YjViYzQyZTgyZTQ3NmI0ZDY1" alt="img"></p>
+<h4 id="确保可靠性的-TCP-协议"><a href="#确保可靠性的-TCP-协议" class="headerlink" title="确保可靠性的 TCP 协议"></a>确保可靠性的 TCP 协议</h4><p>&emsp;&emsp;TCP 和 UDP 都位于传输层，这个前面说过，其中 TCP 是用来提供可靠的字节流服务。</p>
+<p>&emsp;&emsp;其中 TCP 协议能够准确确定数据是否送达目标处，这样的实现的过程就是通过三次握手（three-way handshaking）策略，其中握手过程中使用了 TCP 的标志（flag）——ACK 和 SYN，原理如下：</p>
+<p>&emsp;&emsp;第一次由发起端首先发送一个 SYN 标志的数据包给接收端，第二次握手就是在接收端接收这个标志之后，接收端再反馈一个 SYN 和 ACK 的数据包给发起端，来表达自己已经接收到了发起端的请求，最后一次握手就是在收到接收端的确认信息之后，发起端回传一个 ACK 的数据包给接收端，代表“握手”结束。</p>
+<p>&emsp;&emsp;如果其中有某一次握手中断，那就会延续上一次握手进行重复的请求，但要是请求超时之后就会重新开始由发送端进行第一次握手。</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/IP%E3%80%81TCP%E5%92%8CDNS/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png?versionId=CAEQGRiBgMDa98q58hciIGZjNTZlZWU4OWI1MzRjYjdhMDIyMzEzYWYyNWNiMGE2" alt="image-20211230200934379"></p>
+<h4 id="负责域名解析的-DNS-服务"><a href="#负责域名解析的-DNS-服务" class="headerlink" title="负责域名解析的 DNS 服务"></a>负责域名解析的 DNS 服务</h4><p>就是当你在访问某个网站的时候，会有一个网址(比如：<code>www.baidu.com</code>也就是此网站的域名)，而在访问某个计算机的时候也可以通过赋予此计算机一个域名，最后通过 DNS 解析域名来获取其 IP 地址，最后访问到此计算机。</p>
+<p>DNS 的作用便是通过域名查找对应的设备的 IP 地址，或者逆向从 IP 地址查域名的服务。</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/IP%E3%80%81TCP%E5%92%8CDNS/DNS.png?versionId=CAEQGRiBgMDIlN658hciIGI1YTcxNDhjZjNlMjQxNTdiMTA1OTVkYjJjZjE5ODg5" alt="image-20211230202446976"></p>
+<hr>
+<p>你好，我是小八，一个分享学习经历和知识的在读大学生。</p>
+]]></content>
+      <tags>
+        <tag>计网</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2107的小崽子们</title>
     <url>/2021/12/01/2107%E7%9A%84%E5%B0%8F%E5%B4%BD%E5%AD%90%E4%BB%AC/</url>
     <content><![CDATA[<h3 id="Hello，大家好啊，我是小八"><a href="#Hello，大家好啊，我是小八" class="headerlink" title="Hello，大家好啊，我是小八"></a>Hello，大家好啊，我是小八</h3><span id="more"></span>
@@ -881,35 +910,6 @@
       </tags>
   </entry>
   <entry>
-    <title>TCP、IP、DNS</title>
-    <url>/2022/01/16/TCP%E3%80%81IP%E3%80%81DNS/</url>
-    <content><![CDATA[<p>你好，我是小八，最近在备考，考试总算是结束了，终于可以放假，学习更多的技术了<del>干自己想干的事情了</del></p>
-<p>下面分享一些 IP、TCP、DNS 的基础知识点，大家可以看看，绝对通俗易懂！！！</p>
-<h1 id="与-HTTP-关系密切的协议：IP、TCP-和-DNS"><a href="#与-HTTP-关系密切的协议：IP、TCP-和-DNS" class="headerlink" title="与 HTTP 关系密切的协议：IP、TCP 和 DNS"></a>与 HTTP 关系密切的协议：IP、TCP 和 DNS</h1><h4 id="负责传输的-IP-协议："><a href="#负责传输的-IP-协议：" class="headerlink" title="负责传输的 IP 协议："></a>负责传输的 IP 协议：</h4><p>&emsp;&emsp;按层次分，IP（Internet Protocol）网际协议属于网络层。<strong>IP 地址</strong>和<strong>IP</strong>不同，“IP”其实就是一种协议的名称，即：网际协议。</p>
-<p>&emsp;&emsp;IP 协议作用：把各种<strong>数据包</strong>传送给对方，但是必须满足<strong>IP 地址</strong>和<strong>MAC 地址</strong>（Media Access Control Address）两个条件才能确实送到对方那里。</p>
-<p>&emsp;&emsp;<strong>IP 地址</strong>：节点被分配到的地址，</p>
-<p>&emsp;&emsp;<strong>MAC 地址</strong>：网卡所属的固定地址。</p>
-<p>&emsp;&emsp;<strong>注意：</strong> IP 地址可以变换，MAC 地址基本不变。</p>
-<p>&emsp;&emsp;IP 通信依赖 MAC 地址, 因为不同计算机之间通信时，通常是不在一个局域网(LAN)下，此时就需要多个中间计算机和设备（路由器等均可作为中转设备）进行中转，最后连接到你所需要连接的计算机，在中转的过程中，会利用到下一个中转设备的 MAC 地址来寻找到下一个中转目标。这下就要用到了<strong>ARP 协议</strong>(Address Resolution Protocol).</p>
-<p>&emsp;&emsp;<strong>ARP 协议：</strong> 一种解析地址的协议，根据对方的 IP 地址可以反查出对应的 MAC 地址。</p>
-<p>&emsp;&emsp;如果还是不懂的话，就拿快递公司的收发货方式来打一个比方吧，我们要是双十一买了东西（“东西”就是我们在网络上要传递给某个设备的信息），卖家需要把东西寄给我们（”我们“就是接收信息的设备），那么他们就会把自己的货物送到某快递的集散中心，然后集散中心通过核对收件人地址，来确定送到下一个集散中心（这里的“集散中心”就是类似于一个中转设备），最后到达离收件地址最近的集散中心之后，再送到我们手上（这时候就实现了发起设备和接收设备的信息传递）。</p>
-<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/IP%E3%80%81TCP%E5%92%8CDNS/ARP%E5%8D%8F%E8%AE%AE.png?versionId=CAEQGRiBgID_98q58hciIGU2NDAxY2JlNmQ5MzQ2YjViYzQyZTgyZTQ3NmI0ZDY1" alt="img"></p>
-<h4 id="确保可靠性的-TCP-协议"><a href="#确保可靠性的-TCP-协议" class="headerlink" title="确保可靠性的 TCP 协议"></a>确保可靠性的 TCP 协议</h4><p>&emsp;&emsp;TCP 和 UDP 都位于传输层，这个前面说过，其中 TCP 是用来提供可靠的字节流服务。</p>
-<p>&emsp;&emsp;其中 TCP 协议能够准确确定数据是否送达目标处，这样的实现的过程就是通过三次握手（three-way handshaking）策略，其中握手过程中使用了 TCP 的标志（flag）——ACK 和 SYN，原理如下：</p>
-<p>&emsp;&emsp;第一次由发起端首先发送一个 SYN 标志的数据包给接收端，第二次握手就是在接收端接收这个标志之后，接收端再反馈一个 SYN 和 ACK 的数据包给发起端，来表达自己已经接收到了发起端的请求，最后一次握手就是在收到接收端的确认信息之后，发起端回传一个 ACK 的数据包给接收端，代表“握手”结束。</p>
-<p>&emsp;&emsp;如果其中有某一次握手中断，那就会延续上一次握手进行重复的请求，但要是请求超时之后就会重新开始由发送端进行第一次握手。</p>
-<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/IP%E3%80%81TCP%E5%92%8CDNS/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png?versionId=CAEQGRiBgMDa98q58hciIGZjNTZlZWU4OWI1MzRjYjdhMDIyMzEzYWYyNWNiMGE2" alt="image-20211230200934379"></p>
-<h4 id="负责域名解析的-DNS-服务"><a href="#负责域名解析的-DNS-服务" class="headerlink" title="负责域名解析的 DNS 服务"></a>负责域名解析的 DNS 服务</h4><p>就是当你在访问某个网站的时候，会有一个网址(比如：<code>www.baidu.com</code>也就是此网站的域名)，而在访问某个计算机的时候也可以通过赋予此计算机一个域名，最后通过 DNS 解析域名来获取其 IP 地址，最后访问到此计算机。</p>
-<p>DNS 的作用便是通过域名查找对应的设备的 IP 地址，或者逆向从 IP 地址查域名的服务。</p>
-<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/IP%E3%80%81TCP%E5%92%8CDNS/DNS.png?versionId=CAEQGRiBgMDIlN658hciIGI1YTcxNDhjZjNlMjQxNTdiMTA1OTVkYjJjZjE5ODg5" alt="image-20211230202446976"></p>
-<hr>
-<p>你好，我是小八，一个分享学习经历和知识的在读大学生。</p>
-]]></content>
-      <tags>
-        <tag>计网</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>URI</title>
     <url>/2022/02/04/URI/</url>
     <content><![CDATA[<blockquote>
@@ -952,6 +952,38 @@
 ]]></content>
       <tags>
         <tag>计网</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初识TCP/IP协议族</title>
+    <url>/2021/12/30/%E5%88%9D%E8%AF%86TCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/</url>
+    <content><![CDATA[<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/%E5%88%9D%E8%AF%86TCP%20IP%E5%8D%8F%E8%AE%AE%E6%97%8F.png?versionId=CAEQGRiBgMDG4eKp8BciIDc4YjRlNWZiOTUwNzRlNGY5OTFiNmQzYjBlZWZkODRk"></p>
+<p>&emsp;  你好，我是小八。今天我们来讲一下TCP/IP协议族。</p>
+<h2 id="初识TCP-IP协议族"><a href="#初识TCP-IP协议族" class="headerlink" title="初识TCP/IP协议族"></a>初识TCP/IP协议族</h2><p>&emsp; HTTP属于TCP/IP的一个子类，通常使用的网络（包括互联网）都是在TCP/IP协议族的基础上运作。</p>
+<h3 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h3><p>&emsp;计算机网络设备之间进行信息交互就需要基于相同的方法或者说是同一种协议才能进行通信。就比如：我们需要进行通信的时候，就需要知道如何探测到通信的目标、从哪一边开始发起通信请求、使用什么语言通信、怎么结束通信请求等所制定的规则，便被成为协议（protocol）。</p>
+<p>&emsp;<strong>而TCP/IP协议族就是互联网相关的各类协议族的总称。</strong>对于TCP/IP协议族，通常有两种说法，一是指TCP和IP这两种协议，二是指TCP/IP在IP协议的通信中，使用到的协议族的统称。</p>
+<p>TCP/IP协议族如下图：</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/%E6%97%8F%E7%BE%A4%E5%9B%BE.png?versionId=CAEQGRiBgIDE4eKp8BciIDdkZjU1ZTAzOTEzYTQ3ZWFhY2IxMzIyMTU5OTNlMjBi" alt="image-20211230151831761"></p>
+<h3 id="TCP-IP的分层管理"><a href="#TCP-IP的分层管理" class="headerlink" title="TCP/IP的分层管理"></a>TCP/IP的分层管理</h3><p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/TCP%20IP%E5%88%86%E5%B1%82%E7%AE%A1%E7%90%86.png?versionId=CAEQGRiBgICU4eKp8BciIGU0OTczOWY0YmE5YjRjYmRhMjRiNTdhOGUwOTAzOTEz" alt="image-20211230151253140"></p>
+<p>&emsp;协议族通过分层化，可以高效管理改变不同层次设计的任务，把每个层次之间的不同接口规划好之后，每个层次的内部设计也可以自由改动，而不需要替换所有部分整体。</p>
+<p>&emsp;<strong>应用层：</strong></p>
+<p>&emsp;&emsp;预存各类通用的应用服务，决定了向用户提供应用服务时通信的活动。其中HTTP（超文本传输协议）、FTP（文件传输协议）、DNS（域名协议）等服务在此层</p>
+<p>&emsp;<strong>传输层：</strong></p>
+<p>&emsp;&emsp;对应用层提供处于<strong>网络连接中</strong>的两台计算机的<strong>数据传输</strong>。在此层中有两种不同性质的协议：TCP（传输控制协议）和UDP（用户数据报协议）</p>
+<p>&emsp;<strong>网络层：</strong></p>
+<p>&emsp;&emsp;用来处理在网络上流动的数据包，该层规定与对方计算机进行传输时，通过选择某一种路径（或者说是某一条传输路线）到达对方计算机，并且把数据包传给对方。因此此层又被称为<strong>网络互连层</strong>。</p>
+<p>&emsp;&emsp;<strong>数据包</strong>是网络传输的最小数据单位。</p>
+<p>&emsp;<strong>链路层：</strong></p>
+<p>&emsp;&emsp;用来处理连接网络的硬件部分的层次，包括控制操作系统，硬件设备驱动，NIC（网络适配器，即网卡）等一系列可见的物理传输硬件设备（媒介）。</p>
+<h3 id="TCP-IP通信传输流"><a href="#TCP-IP通信传输流" class="headerlink" title="TCP/IP通信传输流"></a>TCP/IP通信传输流</h3><p>&emsp;&emsp;当我们使用TCP/IP族协议进行通信时，会通过分层顺序进行通信。即：发送请求端：应用层-&gt;传输端-&gt;网络端-&gt;链路端，而服务器的接收端：链路端-&gt;网络端-&gt;传输端-&gt;应用层。在获取到客户端发送的HTTP请求之后，服务端再原路返回将数据反馈给客户端。如下图：</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/%E6%B5%81%E7%A8%8B%E5%9B%BE1.png?versionId=CAEQGRiBgICz4eKp8BciIDEwNjI2MzQ2NDA0ZDQ2OWFhZGY1YjUwOWNhODRlOWU3" alt="image-20211230155905764"></p>
+<p>&emsp;发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。反之，接收端在层与层传输数据时，每经过一层时会把对应的首部消去。 这种把数据信息包装起来的做法称为<strong>封装（encapsulate）</strong>（就类似于C++类的使用，将类中的成员和数据进行封装）。下图为例：</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/%E6%B5%81%E7%A8%8B%E5%9B%BE2.png?versionId=CAEQGRiBgICx4eKp8BciIDIzNDlkYjhjYWM1YjQyYTRiNTVjOTk4NmVhYmE0YWEz" alt="image-20211230160020206"></p>
+<p>&emsp;</p>
+]]></content>
+      <tags>
+        <tag>计网</tag>
+        <tag>TCP/IP</tag>
       </tags>
   </entry>
   <entry>
@@ -1033,35 +1065,286 @@
       </tags>
   </entry>
   <entry>
-    <title>初识TCP/IP协议族</title>
-    <url>/2021/12/30/%E5%88%9D%E8%AF%86TCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/</url>
-    <content><![CDATA[<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/%E5%88%9D%E8%AF%86TCP%20IP%E5%8D%8F%E8%AE%AE%E6%97%8F.png?versionId=CAEQGRiBgMDG4eKp8BciIDc4YjRlNWZiOTUwNzRlNGY5OTFiNmQzYjBlZWZkODRk"></p>
-<p>&emsp;  你好，我是小八。今天我们来讲一下TCP/IP协议族。</p>
-<h2 id="初识TCP-IP协议族"><a href="#初识TCP-IP协议族" class="headerlink" title="初识TCP/IP协议族"></a>初识TCP/IP协议族</h2><p>&emsp; HTTP属于TCP/IP的一个子类，通常使用的网络（包括互联网）都是在TCP/IP协议族的基础上运作。</p>
-<h3 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h3><p>&emsp;计算机网络设备之间进行信息交互就需要基于相同的方法或者说是同一种协议才能进行通信。就比如：我们需要进行通信的时候，就需要知道如何探测到通信的目标、从哪一边开始发起通信请求、使用什么语言通信、怎么结束通信请求等所制定的规则，便被成为协议（protocol）。</p>
-<p>&emsp;<strong>而TCP/IP协议族就是互联网相关的各类协议族的总称。</strong>对于TCP/IP协议族，通常有两种说法，一是指TCP和IP这两种协议，二是指TCP/IP在IP协议的通信中，使用到的协议族的统称。</p>
-<p>TCP/IP协议族如下图：</p>
-<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/%E6%97%8F%E7%BE%A4%E5%9B%BE.png?versionId=CAEQGRiBgIDE4eKp8BciIDdkZjU1ZTAzOTEzYTQ3ZWFhY2IxMzIyMTU5OTNlMjBi" alt="image-20211230151831761"></p>
-<h3 id="TCP-IP的分层管理"><a href="#TCP-IP的分层管理" class="headerlink" title="TCP/IP的分层管理"></a>TCP/IP的分层管理</h3><p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/TCP%20IP%E5%88%86%E5%B1%82%E7%AE%A1%E7%90%86.png?versionId=CAEQGRiBgICU4eKp8BciIGU0OTczOWY0YmE5YjRjYmRhMjRiNTdhOGUwOTAzOTEz" alt="image-20211230151253140"></p>
-<p>&emsp;协议族通过分层化，可以高效管理改变不同层次设计的任务，把每个层次之间的不同接口规划好之后，每个层次的内部设计也可以自由改动，而不需要替换所有部分整体。</p>
-<p>&emsp;<strong>应用层：</strong></p>
-<p>&emsp;&emsp;预存各类通用的应用服务，决定了向用户提供应用服务时通信的活动。其中HTTP（超文本传输协议）、FTP（文件传输协议）、DNS（域名协议）等服务在此层</p>
-<p>&emsp;<strong>传输层：</strong></p>
-<p>&emsp;&emsp;对应用层提供处于<strong>网络连接中</strong>的两台计算机的<strong>数据传输</strong>。在此层中有两种不同性质的协议：TCP（传输控制协议）和UDP（用户数据报协议）</p>
-<p>&emsp;<strong>网络层：</strong></p>
-<p>&emsp;&emsp;用来处理在网络上流动的数据包，该层规定与对方计算机进行传输时，通过选择某一种路径（或者说是某一条传输路线）到达对方计算机，并且把数据包传给对方。因此此层又被称为<strong>网络互连层</strong>。</p>
-<p>&emsp;&emsp;<strong>数据包</strong>是网络传输的最小数据单位。</p>
-<p>&emsp;<strong>链路层：</strong></p>
-<p>&emsp;&emsp;用来处理连接网络的硬件部分的层次，包括控制操作系统，硬件设备驱动，NIC（网络适配器，即网卡）等一系列可见的物理传输硬件设备（媒介）。</p>
-<h3 id="TCP-IP通信传输流"><a href="#TCP-IP通信传输流" class="headerlink" title="TCP/IP通信传输流"></a>TCP/IP通信传输流</h3><p>&emsp;&emsp;当我们使用TCP/IP族协议进行通信时，会通过分层顺序进行通信。即：发送请求端：应用层-&gt;传输端-&gt;网络端-&gt;链路端，而服务器的接收端：链路端-&gt;网络端-&gt;传输端-&gt;应用层。在获取到客户端发送的HTTP请求之后，服务端再原路返回将数据反馈给客户端。如下图：</p>
-<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/%E6%B5%81%E7%A8%8B%E5%9B%BE1.png?versionId=CAEQGRiBgICz4eKp8BciIDEwNjI2MzQ2NDA0ZDQ2OWFhZGY1YjUwOWNhODRlOWU3" alt="image-20211230155905764"></p>
-<p>&emsp;发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。反之，接收端在层与层传输数据时，每经过一层时会把对应的首部消去。 这种把数据信息包装起来的做法称为<strong>封装（encapsulate）</strong>（就类似于C++类的使用，将类中的成员和数据进行封装）。下图为例：</p>
-<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%88%9D%E5%A7%8BTCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F/%E6%B5%81%E7%A8%8B%E5%9B%BE2.png?versionId=CAEQGRiBgICx4eKp8BciIDIzNDlkYjhjYWM1YjQyYTRiNTVjOTk4NmVhYmE0YWEz" alt="image-20211230160020206"></p>
-<p>&emsp;</p>
+    <title>小八学习git从0到基本运用</title>
+    <url>/2021/11/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p style="text-indent:20px;">有一说一，刚刚步入计算机大二的我，这个Github在我的认知里面一直只是一个大牛从中copy代码的网站，我对其的了解也仅仅在于抖音的“黑马程序员”里面的人说的这个网站很多大牛，才会使用。</p>
+
+<p>&emsp;&emsp;就在前几天，我收到了我的学长ConeZhang（名字都不透露了，后面简写：驰哥）给我发的几条信息。</p>
+<span id="more"></span>
+<img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/QQ%E5%9B%BE%E7%89%8720211204214135.jpg?versionId=CAEQFxiBgICF.t.W7BciIDEyZDZhNTYwMDY4YzRmYTliOWE3NDgyOGZkYzBhMWI3">
+
+<img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/QQ%E5%9B%BE%E7%89%8720211204214217.jpg?versionId=CAEQFxiBgMCYhuCW7BciIDY5OWFiMDE2NGRiYzRkM2Q4MGNiYjg3M2MzMTI4YTY0">
+
+<p>&emsp;&emsp;看到这些消息，我直接开心的起飞，不知道怎么用语言来形容了，当时内心OS：woc！！这可是同时拿到百度，腾讯，快手sp甚至ssp的offer，最后去了字节的大佬啊，能带上我做项目，什么概念！！我上辈子肯定积了不少德，哈哈哈哈，说到驰哥，真就是机缘巧合，我还记得我第一次跟驰哥有了联系方式居然就在我预科刚入校的时候，因为学校教务系统的密码，忘记了，然后通过多方路径找到了驰哥的联系方式，然后帮我修改了密码，正巧我打算大一选择的就是计算机专业。</p>
+<p>&emsp;&emsp;好了好了，言归正传，就在2021-11-26 18：33 驰哥给我发来了消息，要我赶紧这个周末学习完成，收到这个任务，我立刻马上关闭了LOL，开始了Git煎熬之旅。</p>
+<h2 id="初入Git"><a href="#初入Git" class="headerlink" title="初入Git"></a>初入Git</h2><h3 id="Git的起源及比较："><a href="#Git的起源及比较：" class="headerlink" title="Git的起源及比较："></a>Git的起源及比较：</h3><p>&emsp;&emsp;我打开了驰哥发给我的学习网站，开始对Git的初步了解，发现原来Linux开发了Git及github网站，而Git与类似网站有不同之处就是，CVS以及SVN都是集中式的版本控制系统，但是Git是分布式的版本系统，但是集中式的系统最大毛病就是必须联网才能工作，如果在局域网内还好，带宽够大，速度够快，可如果在互联网上，遇到网速慢的话，可能提交一个10M的文件就需要几十分钟，这还不得把人给憋死啊？</p>
+<h3 id="Git的安装以及创建远程仓库："><a href="#Git的安装以及创建远程仓库：" class="headerlink" title="Git的安装以及创建远程仓库："></a>Git的安装以及创建远程仓库：</h3><p>&emsp;&emsp;个人觉得真没什么好说的，用大一老师lq老师说的，不会就给我多安装几次就会了，要是电脑出问题了，就重装系统，一举多得，还能自学安装系统，要是看到这个博客的小伙伴，不知道怎么去安装，可以上我b大，或者在<a href="https://www.liaoxuefeng.com/wiki/896043488029600">廖雪峰老师的网站</a>进行学习，实在还是不会，可以加我的QQ奥。</p>
+<h2 id="Git的用法简介："><a href="#Git的用法简介：" class="headerlink" title="Git的用法简介："></a>Git的用法简介：</h2><h3 id="一、创建新的版本库"><a href="#一、创建新的版本库" class="headerlink" title="一、创建新的版本库"></a>一、创建新的版本库</h3><p>&emsp;&emsp;1.打开git bash找到一个非c盘的合适位置，来做创建一个空目录（我以d盘为例，创建一个文件夹learngit）<br>(输入语句里面含$)</p>
+<blockquote>
+<p>$mkdir /d/learngit</p>
+</blockquote>
+<blockquote>
+<p>$cd /d/learngit</p>
+</blockquote>
+<blockquote>
+<p>$pwd /d/learngit</p>
+</blockquote>
+<p>2.通过git init命令进行git仓库初始化</p>
+<blockquote>
+<p>$git init</p>
+</blockquote>
+<p>Initialized empty Git repository in D:/learngit/.git/</p>
+<p>3.通过vi readme.txt创建一个新的文本框</p>
+<blockquote>
+<p>$vi readme.txt</p>
+</blockquote>
+<p>4.跳转到编辑界面，按下insert（ins）进行编辑，编辑完成之后按一下esc，再输入:wq进行退出(听我一个正在学Linux系统的室友告诉我，如果文档是只读的话，进行修改了的，就按:wq!进行强制退出)</p>
+<p>5.用命令git commit告诉Git，把文件提交到仓库，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。</p>
+<blockquote>
+<p>$git commit -m”wrote a readme file “</p>
+</blockquote>
+<p>[master (root-commit) df7ffd5] wrote a readme file</p>
+<p> 1 file changed, 1 insertion(+)</p>
+<p> create mode 100644 readme.txt</p>
+<h3 id="二、其他基本命令的使用"><a href="#二、其他基本命令的使用" class="headerlink" title="二、其他基本命令的使用"></a>二、其他基本命令的使用</h3><h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><p>&emsp;&emsp;1、git log命令显示从最近到最远的提交日志，我们可以看到3次提交，最近的一次是append GPL，上一次是add distributed，最早的一次是wrote a readme file。</p>
+<p>如果嫌输出信息太多，看得眼花缭乱的，可以试试加上–pretty=oneline参数：</p>
+<blockquote>
+<p>$ git log –pretty=oneline</p>
+</blockquote>
+<p>&emsp;&emsp;2、现在，我们要把当前版本append GPL回退到上一个版本add distributed，就可以使用git reset命令：</p>
+<blockquote>
+<p>$ git reset –hard HEAD^</p>
+</blockquote>
+<p>&emsp;&emsp;在Git中，用HEAD表示当前版本，也就是最新的提交1094adb…（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。</p>
+<p>&emsp;&emsp;3、最新的那个版本append GPL已经看不到了！好比你从21世纪坐时光穿梭机来到了19世纪，想再回去已经回不去了，肿么办？</p>
+<p>&emsp;&emsp;办法其实还是有的，只要上面的命令行窗口还没有被关掉，你就可以顺着往上找啊找啊，找到那个append GPL的commit id是1094adb…，于是就可以指定回到未来的某个版本：</p>
+<blockquote>
+<p>$ git reset –hard 1094a</p>
+</blockquote>
+<p>HEAD is now at 83b0afe append GPL</p>
+<p>&emsp;&emsp;现在，你回退到了某个版本，关掉了电脑，第二天早上就后悔了，想恢复到新版本怎么办？找不到新版本的commit id怎么办？</p>
+<p>&emsp;&emsp;在Git中，总是有后悔药可以吃的。当你用$ git reset –hard HEAD^回退到add distributed版本时，再想恢复到append GPL，就必须找到append GPL的commit id。Git提供了一个命令git reflog用来记录你的每一次命令：</p>
+<p>&emsp;&emsp;4、$ git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
+<h4 id="管理修改"><a href="#管理修改" class="headerlink" title="管理修改"></a>管理修改</h4><p>&emsp;&emsp;1、每次修改，如果不用git add到暂存区，那就不会加入到commit中。</p>
+<p>&emsp;&emsp;2、git diff HEAD – readme.txt命令可以查看工作区和版本库里面最新版本的区别：</p>
+<blockquote>
+<p>$ git diff HEAD – readme.txt </p>
+</blockquote>
+<p>diff –git a/readme.txt b/readme.txt<br>index 76d770f..a9c5755 100644<br>— a/readme.txt<br>+++ b/readme.txt<br>@@ -1,4 +1,4 @@<br> Git is a distributed version control system.<br> Git is free software distributed under the GPL.<br> Git has a mutable index called stage.<br>-Git tracks changes.<br>+Git tracks changes of files.</p>
+<h4 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h4><p>&emsp;&emsp;1、既然错误发现得很及时，就可以很容易地纠正它。你可以删掉最后一行，手动把文件恢复到上一个版本的状态。如果用git status查看一下：</p>
+<blockquote>
+<p>$ git status</p>
+</blockquote>
+<p>On branch master</p>
+<p>Changes not staged for commit:</p>
+<p>  (use “git add <file>…” to update what will be committed)</file></p>
+<p>  (use “git checkout – <file>…” to discard changes in working directory)</file></p>
+<pre><code>modified:   readme.txt
+</code></pre>
+<p>no changes added to commit (use “git add” and/or “git commit -a”)</p>
+<p>你可以发现，Git会告诉你，git checkout – file可以丢弃工作区的修改：</p>
+<blockquote>
+<p>$ git checkout – readme.txt</p>
+</blockquote>
+<p>2、现在假定是凌晨3点，你不但写了一些胡话，还git add到暂存区了：</p>
+<p>庆幸的是，在commit之前，你发现了这个问题。用git status查看一下，修改只是添加到了暂存区，还没有提交：</p>
+<p>Git同样告诉我们，用命令git reset HEAD <file>可以把暂存区的修改撤销掉（unstage），重新放回工作区：</file></p>
+<blockquote>
+<p>$ git reset HEAD readme.txt</p>
+</blockquote>
+<p>git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。</p>
+<p>再用git status查看一下，现在暂存区是干净的，工作区有修改：</p>
+<p>还记得如何丢弃工作区的修改吗？</p>
+<blockquote>
+<p>$ git checkout – readme.txt</p>
+</blockquote>
+<h4 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h4><p>1、一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了：</p>
+<blockquote>
+<p>$ rm test.txt</p>
+</blockquote>
+<p>这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，git status命令会立刻告诉你哪些文件被删除了：</p>
+<p>rm之后你有两个选择，一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit：</p>
+<blockquote>
+<p>$ git rm test.txt</p>
+</blockquote>
+<p>rm ‘test.txt’</p>
+<p>2、切记，在git rm 之后还需要提交commit才能从版本库中被删除</p>
+<blockquote>
+<p>$ git commit -m “remove test.txt”</p>
+</blockquote>
+<p>[master d46f35e] remove test.txt</p>
+<p> 1 file changed, 1 deletion(-)</p>
+<p> delete mode 100644 test.txt<br>现在，文件就从版本库中被删除了。</p>
+<p>3、另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：（经实验，如果版本库里面也被rm了就无法恢复了）</p>
+<blockquote>
+<p>$ git checkout – test.txt</p>
+</blockquote>
+<h4 id="远程库的使用"><a href="#远程库的使用" class="headerlink" title="远程库的使用"></a>远程库的使用</h4><p>一、添加远程库</p>
+<p>具体怎么添加，请小伙伴们，自行百度学习，具体实现就不说了，小编只在这里讲一下添加时候的一些命令：</p>
+<p>1、在本次仓里面运行命令：</p>
+<blockquote>
+<p>$ git remote add origin <a href="mailto:&#103;&#x69;&#x74;&#x40;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#x2e;&#x63;&#111;&#109;">&#103;&#x69;&#x74;&#x40;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#x2e;&#x63;&#111;&#109;</a>:pengzihao166/learngit.git</p>
+</blockquote>
+<p>注意：把上面的pengzihao166替换成你自己的GitHub账户名，否则，你在本地关联的就是我的远程库，关联没有问题，但是你以后推送是推不上去的，因为你的SSH Key公钥不在我的账户列表中。</p>
+<p>2、下一步，就可以把本地库的所有内容推送到远程库上：</p>
+<blockquote>
+<p>$ git push -u origin master</p>
+</blockquote>
+<p>把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。</p>
+<p>注意：由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。</p>
+<p>3、从现在起，只要本地作了提交，就可以通过命令：</p>
+<blockquote>
+<p>$ git push origin master</p>
+</blockquote>
+<p>二、删除远程库</p>
+<p>1、如果添加的时候地址写错了，或者就是想删除远程库，可以用git remote rm <name>命令。使用前，建议先用git remote -v查看远程库信息：</name></p>
+<blockquote>
+<p>$ git remote -v<br>origin  <a href="mailto:&#103;&#x69;&#116;&#64;&#103;&#105;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#111;&#x6d;">&#103;&#x69;&#116;&#64;&#103;&#105;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#111;&#x6d;</a>:pengzihao166/learn-git.git (fetch)</p>
+</blockquote>
+<p>origin  <a href="mailto:&#x67;&#x69;&#x74;&#x40;&#103;&#x69;&#x74;&#x68;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;">&#x67;&#x69;&#x74;&#x40;&#103;&#x69;&#x74;&#x68;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;</a>:pengzihao166/learn-git.git (push)</p>
+<p>然后，根据名字删除，比如删除origin：</p>
+<blockquote>
+<p>$ git remote rm origin</p>
+</blockquote>
+<p>三、从远程库克隆</p>
+<p>1、准备好远程库</p>
+<p>2、现在，远程库已经准备好了，下一步是用命令git clone克隆一个本地库：</p>
+<blockquote>
+<p>$ git clone <a href="mailto:&#103;&#105;&#x74;&#x40;&#103;&#x69;&#x74;&#x68;&#x75;&#98;&#46;&#99;&#x6f;&#x6d;">&#103;&#105;&#x74;&#x40;&#103;&#x69;&#x74;&#x68;&#x75;&#98;&#46;&#99;&#x6f;&#x6d;</a>:pengzihao166/gitskills.git</p>
+</blockquote>
+<p>注意把Git库的地址换成你自己的，然后进入gitskills目录看看，已经有README.md文件了。</p>
+<p>Git支持多种协议，包括https，但ssh协议速度最快。</p>
+<h4 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h4><p>一、创建并合并分支</p>
+<p>创建命令：</p>
+<blockquote>
+<p>git switch -c ***</p>
+</blockquote>
+<p>合并命令：</p>
+<blockquote>
+<p>git merge ***</p>
+</blockquote>
+<p>注意：***是你想取的名字</p>
+<p>二、分支管理策略</p>
+<p>合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
+<p>例：</p>
+<blockquote>
+<p>$ git merge –no-ff -m “merge with no-ff” dev</p>
+</blockquote>
+<p>合并后，我们用git log看看分支历史：</p>
+<blockquote>
+<p>$ git log –graph –pretty=oneline –abbrev-commit</p>
+</blockquote>
+<p>二、bug和feature分支：</p>
+<p>这两个分支总体来说用法都一样，就是在不同工作环境下使用的时间不一样，就拿bug来举例好了：</p>
+<p>1、当你接到一个修复一个代号101的bug的任务时,当前正在dev上进行的工作还没有提交。</p>
+<p>幸好，Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作：</p>
+<blockquote>
+<p>$ git stash<br>Saved working directory and index state WIP on dev: f52c633 add merge</p>
+</blockquote>
+<p>2、返回到主分支master之后，再建立一个新的分支issue-101，在此分支上面进行readme.txt文档的修改已知bug（经自己的实验发现一个问题，原来如果vi文件完成之后你使用前面提到的:wq或者wq!或者ZZ命令会发现，你的文件直接被git add了，只需要直接commit）</p>
+<blockquote>
+<p>$ git add readme.txt </p>
+</blockquote>
+<blockquote>
+<p>$ git commit -m “fix bug 101”</p>
+</blockquote>
+<p>[issue-101 a1d6694] fix bug 101</p>
+<p>1 file changed, 1 insertion(+), 1 deletion(-)</p>
+<p>3、再修改bug完成之后，返回到master分支，然后，再进行git merge –no-ff -m “merged bug fix 101” issue-101合并刚刚的issue-101分支修改的bug内容</p>
+<p>4、然后就是跳转到先前的Dev分支上面，继续以前的工作，通过git stash list 查找到刚刚git stash存好的工作区的文件，恢复方法如下：<br>     输入git stash list</p>
+<pre><code>  $ git stash list
+
+      stash@&#123;0&#125;: WIP on dev:ecd2437add merge
+
+   ①一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+
+    另一种方式是用git stash pop，恢复的同时把stash内容也删了：
+    
+   ②$ git stash apply stash@&#123;0&#125;
+
+      stash@&#123;0&#125;就是list显示的前缀名
+</code></pre>
+<p>5、同样的bug，要在dev上修复，我们只需要把4c805e2 fix bug 101这个提交所做的修改“复制”到dev分支。注意：我们只想复制4c805e2 fix bug 101这个提交所做的修改，并不是把整个master分支merge过来。</p>
+<p>为了方便操作，Git专门提供了一个cherry-pick命令，让我们能复制一个特定的提交到当前分支：</p>
+<blockquote>
+<p>$ git branch</p>
+</blockquote>
+<ul>
+<li><p>dev（此时在dev分支上面）</p>
+<p>master</p>
+</li>
+</ul>
+<blockquote>
+<p>$ git cherry-pick a1d6694</p>
+</blockquote>
+<p>[master 1d4b803] fix bug 101</p>
+<p> 1 file changed, 1 insertion(+), 1 deletion(-)</p>
+<h4 id="标签管理："><a href="#标签管理：" class="headerlink" title="标签管理："></a>标签管理：</h4><p>一、创建标签：</p>
+<p>1、直接法：</p>
+<blockquote>
+<p>$ git branch</p>
+</blockquote>
+<ul>
+<li>dev<br>master<blockquote>
+<p>$ git checkout master</p>
+</blockquote>
+</li>
+</ul>
+<p>Switched to branch ‘master’</p>
+<p>然后，敲命令git tag <name>就可以打一个新标签：</name></p>
+<blockquote>
+<p>$ git tag v1.0</p>
+</blockquote>
+<p>可以用命令git tag查看所有标签：</p>
+<blockquote>
+<p>$ git tag</p>
+</blockquote>
+<p>v1.0</p>
+<p>2、默认标签是打在最新提交的commit上的。有时候，如果忘了打标签，比如，现在已经是周五了，但应该在周一打的标签没有打，怎么办？</p>
+<p>方法是找到历史提交的commit id，然后打上就可以了：</p>
+<blockquote>
+<p>$ git log –pretty=oneline –abbrev-commit</p>
+</blockquote>
+<p>12a631b (HEAD -&gt; master, tag: v1.0, origin/master) </p>
+<p>merged bug fix 101</p>
+<p>4c805e2 fix bug 101</p>
+<p>e1e9c68 merge with no-ff</p>
+<p>f52c633 add merge</p>
+<p>比方说要对add merge这次提交打标签，它对应的commit id是f52c633，敲入命令：</p>
+<blockquote>
+<p>$ git tag v0.9 f52c633</p>
+</blockquote>
+<p>再用命令git tag查看标签：</p>
+<blockquote>
+<p>$ git tag</p>
+</blockquote>
+<p>v0.9</p>
+<p>v1.0</p>
+<p>注意，标签不是按时间顺序列出，而是按字母排序的。可以用git show <tagname>查看标签信息：</tagname></p>
+<blockquote>
+<p>$ git show v0.9</p>
+</blockquote>
+<p>可以看到，v0.9确实打在add merge这次提交上。</p>
+<p>还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：</p>
+<blockquote>
+<p>$ git tag -a v0.1 -m “version 0.1 released” 1094adb</p>
+</blockquote>
+<p>用命令git show <tagname>可以看到说明文字：</tagname></p>
+<blockquote>
+<p>$ git show v0.1\</p>
+</blockquote>
+<p>二、操作标签</p>
+<p>命令git push origin <tagname>可以推送一个本地标签；</tagname></p>
+<p>命令git push origin –tags可以推送全部未推送过的本地标签；</p>
+<p>命令git tag -d <tagname>可以删除一个本地标签；</tagname></p>
+<p>命令git push origin :refs/tags/<tagname>可以删除一个远程标签。</tagname></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&ensp; &ensp;今天的Git命令的使用，就到此结束了，要是有啥疑惑的小伙伴可以去自行百度或者加上我的联系方式，联系我奥。</p>
+<p>&ensp; &ensp;部分内容转自<a href="https://www.liaoxuefeng.com/wiki/896043488029600">廖雪峰老师的网站</a>，如有侵权，请立刻联系小编进行修改完善。</p>
+<pre><code>                                                              ---来自一个小白的真实学习笔记
+</code></pre>
 ]]></content>
       <tags>
-        <tag>计网</tag>
-        <tag>TCP/IP</tag>
+        <tag>Git+Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1246,289 +1529,6 @@
 <p>&ensp; &ensp;最后打开你的<code>http://pengzihao166.github.io</code>(记得把pengzihao166改成你自己的github的用户名)，如果你绑定了域名你也可以直接输入你自己的域名进入一个属于自己的blog。</p>
 <h2 id="结束语："><a href="#结束语：" class="headerlink" title="结束语："></a>结束语：</h2><p>&ensp; &ensp;这次运用hexo+git搭建博客，不知道你们是否学会了呢，要是内容含任何的错误知识点，请及时联系小编，或者在下方进行评论提出，方便小编及时修改错误，免得对其他小伙伴的学习造成勿扰，当然有什么观点也可以在评论中表达出来，希望大家可以参与到其中来。</p>
 <p>&ensp; &ensp;部分内容转载自<a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">小茗同学博客园</a>,如有侵权，请立刻联系小编，进行修改完善。</p>
-]]></content>
-      <tags>
-        <tag>Git+Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>小八学习git从0到基本运用</title>
-    <url>/2021/11/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p style="text-indent:20px;">有一说一，刚刚步入计算机大二的我，这个Github在我的认知里面一直只是一个大牛从中copy代码的网站，我对其的了解也仅仅在于抖音的“黑马程序员”里面的人说的这个网站很多大牛，才会使用。</p>
-
-<p>&emsp;&emsp;就在前几天，我收到了我的学长ConeZhang（名字都不透露了，后面简写：驰哥）给我发的几条信息。</p>
-<span id="more"></span>
-<img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/QQ%E5%9B%BE%E7%89%8720211204214135.jpg?versionId=CAEQFxiBgICF.t.W7BciIDEyZDZhNTYwMDY4YzRmYTliOWE3NDgyOGZkYzBhMWI3">
-
-<img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/QQ%E5%9B%BE%E7%89%8720211204214217.jpg?versionId=CAEQFxiBgMCYhuCW7BciIDY5OWFiMDE2NGRiYzRkM2Q4MGNiYjg3M2MzMTI4YTY0">
-
-<p>&emsp;&emsp;看到这些消息，我直接开心的起飞，不知道怎么用语言来形容了，当时内心OS：woc！！这可是同时拿到百度，腾讯，快手sp甚至ssp的offer，最后去了字节的大佬啊，能带上我做项目，什么概念！！我上辈子肯定积了不少德，哈哈哈哈，说到驰哥，真就是机缘巧合，我还记得我第一次跟驰哥有了联系方式居然就在我预科刚入校的时候，因为学校教务系统的密码，忘记了，然后通过多方路径找到了驰哥的联系方式，然后帮我修改了密码，正巧我打算大一选择的就是计算机专业。</p>
-<p>&emsp;&emsp;好了好了，言归正传，就在2021-11-26 18：33 驰哥给我发来了消息，要我赶紧这个周末学习完成，收到这个任务，我立刻马上关闭了LOL，开始了Git煎熬之旅。</p>
-<h2 id="初入Git"><a href="#初入Git" class="headerlink" title="初入Git"></a>初入Git</h2><h3 id="Git的起源及比较："><a href="#Git的起源及比较：" class="headerlink" title="Git的起源及比较："></a>Git的起源及比较：</h3><p>&emsp;&emsp;我打开了驰哥发给我的学习网站，开始对Git的初步了解，发现原来Linux开发了Git及github网站，而Git与类似网站有不同之处就是，CVS以及SVN都是集中式的版本控制系统，但是Git是分布式的版本系统，但是集中式的系统最大毛病就是必须联网才能工作，如果在局域网内还好，带宽够大，速度够快，可如果在互联网上，遇到网速慢的话，可能提交一个10M的文件就需要几十分钟，这还不得把人给憋死啊？</p>
-<h3 id="Git的安装以及创建远程仓库："><a href="#Git的安装以及创建远程仓库：" class="headerlink" title="Git的安装以及创建远程仓库："></a>Git的安装以及创建远程仓库：</h3><p>&emsp;&emsp;个人觉得真没什么好说的，用大一老师lq老师说的，不会就给我多安装几次就会了，要是电脑出问题了，就重装系统，一举多得，还能自学安装系统，要是看到这个博客的小伙伴，不知道怎么去安装，可以上我b大，或者在<a href="https://www.liaoxuefeng.com/wiki/896043488029600">廖雪峰老师的网站</a>进行学习，实在还是不会，可以加我的QQ奥。</p>
-<h2 id="Git的用法简介："><a href="#Git的用法简介：" class="headerlink" title="Git的用法简介："></a>Git的用法简介：</h2><h3 id="一、创建新的版本库"><a href="#一、创建新的版本库" class="headerlink" title="一、创建新的版本库"></a>一、创建新的版本库</h3><p>&emsp;&emsp;1.打开git bash找到一个非c盘的合适位置，来做创建一个空目录（我以d盘为例，创建一个文件夹learngit）<br>(输入语句里面含$)</p>
-<blockquote>
-<p>$mkdir /d/learngit</p>
-</blockquote>
-<blockquote>
-<p>$cd /d/learngit</p>
-</blockquote>
-<blockquote>
-<p>$pwd /d/learngit</p>
-</blockquote>
-<p>2.通过git init命令进行git仓库初始化</p>
-<blockquote>
-<p>$git init</p>
-</blockquote>
-<p>Initialized empty Git repository in D:/learngit/.git/</p>
-<p>3.通过vi readme.txt创建一个新的文本框</p>
-<blockquote>
-<p>$vi readme.txt</p>
-</blockquote>
-<p>4.跳转到编辑界面，按下insert（ins）进行编辑，编辑完成之后按一下esc，再输入:wq进行退出(听我一个正在学Linux系统的室友告诉我，如果文档是只读的话，进行修改了的，就按:wq!进行强制退出)</p>
-<p>5.用命令git commit告诉Git，把文件提交到仓库，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。</p>
-<blockquote>
-<p>$git commit -m”wrote a readme file “</p>
-</blockquote>
-<p>[master (root-commit) df7ffd5] wrote a readme file</p>
-<p> 1 file changed, 1 insertion(+)</p>
-<p> create mode 100644 readme.txt</p>
-<h3 id="二、其他基本命令的使用"><a href="#二、其他基本命令的使用" class="headerlink" title="二、其他基本命令的使用"></a>二、其他基本命令的使用</h3><h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><p>&emsp;&emsp;1、git log命令显示从最近到最远的提交日志，我们可以看到3次提交，最近的一次是append GPL，上一次是add distributed，最早的一次是wrote a readme file。</p>
-<p>如果嫌输出信息太多，看得眼花缭乱的，可以试试加上–pretty=oneline参数：</p>
-<blockquote>
-<p>$ git log –pretty=oneline</p>
-</blockquote>
-<p>&emsp;&emsp;2、现在，我们要把当前版本append GPL回退到上一个版本add distributed，就可以使用git reset命令：</p>
-<blockquote>
-<p>$ git reset –hard HEAD^</p>
-</blockquote>
-<p>&emsp;&emsp;在Git中，用HEAD表示当前版本，也就是最新的提交1094adb…（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。</p>
-<p>&emsp;&emsp;3、最新的那个版本append GPL已经看不到了！好比你从21世纪坐时光穿梭机来到了19世纪，想再回去已经回不去了，肿么办？</p>
-<p>&emsp;&emsp;办法其实还是有的，只要上面的命令行窗口还没有被关掉，你就可以顺着往上找啊找啊，找到那个append GPL的commit id是1094adb…，于是就可以指定回到未来的某个版本：</p>
-<blockquote>
-<p>$ git reset –hard 1094a</p>
-</blockquote>
-<p>HEAD is now at 83b0afe append GPL</p>
-<p>&emsp;&emsp;现在，你回退到了某个版本，关掉了电脑，第二天早上就后悔了，想恢复到新版本怎么办？找不到新版本的commit id怎么办？</p>
-<p>&emsp;&emsp;在Git中，总是有后悔药可以吃的。当你用$ git reset –hard HEAD^回退到add distributed版本时，再想恢复到append GPL，就必须找到append GPL的commit id。Git提供了一个命令git reflog用来记录你的每一次命令：</p>
-<p>&emsp;&emsp;4、$ git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
-<h4 id="管理修改"><a href="#管理修改" class="headerlink" title="管理修改"></a>管理修改</h4><p>&emsp;&emsp;1、每次修改，如果不用git add到暂存区，那就不会加入到commit中。</p>
-<p>&emsp;&emsp;2、git diff HEAD – readme.txt命令可以查看工作区和版本库里面最新版本的区别：</p>
-<blockquote>
-<p>$ git diff HEAD – readme.txt </p>
-</blockquote>
-<p>diff –git a/readme.txt b/readme.txt<br>index 76d770f..a9c5755 100644<br>— a/readme.txt<br>+++ b/readme.txt<br>@@ -1,4 +1,4 @@<br> Git is a distributed version control system.<br> Git is free software distributed under the GPL.<br> Git has a mutable index called stage.<br>-Git tracks changes.<br>+Git tracks changes of files.</p>
-<h4 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h4><p>&emsp;&emsp;1、既然错误发现得很及时，就可以很容易地纠正它。你可以删掉最后一行，手动把文件恢复到上一个版本的状态。如果用git status查看一下：</p>
-<blockquote>
-<p>$ git status</p>
-</blockquote>
-<p>On branch master</p>
-<p>Changes not staged for commit:</p>
-<p>  (use “git add <file>…” to update what will be committed)</file></p>
-<p>  (use “git checkout – <file>…” to discard changes in working directory)</file></p>
-<pre><code>modified:   readme.txt
-</code></pre>
-<p>no changes added to commit (use “git add” and/or “git commit -a”)</p>
-<p>你可以发现，Git会告诉你，git checkout – file可以丢弃工作区的修改：</p>
-<blockquote>
-<p>$ git checkout – readme.txt</p>
-</blockquote>
-<p>2、现在假定是凌晨3点，你不但写了一些胡话，还git add到暂存区了：</p>
-<p>庆幸的是，在commit之前，你发现了这个问题。用git status查看一下，修改只是添加到了暂存区，还没有提交：</p>
-<p>Git同样告诉我们，用命令git reset HEAD <file>可以把暂存区的修改撤销掉（unstage），重新放回工作区：</file></p>
-<blockquote>
-<p>$ git reset HEAD readme.txt</p>
-</blockquote>
-<p>git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。</p>
-<p>再用git status查看一下，现在暂存区是干净的，工作区有修改：</p>
-<p>还记得如何丢弃工作区的修改吗？</p>
-<blockquote>
-<p>$ git checkout – readme.txt</p>
-</blockquote>
-<h4 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h4><p>1、一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了：</p>
-<blockquote>
-<p>$ rm test.txt</p>
-</blockquote>
-<p>这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，git status命令会立刻告诉你哪些文件被删除了：</p>
-<p>rm之后你有两个选择，一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit：</p>
-<blockquote>
-<p>$ git rm test.txt</p>
-</blockquote>
-<p>rm ‘test.txt’</p>
-<p>2、切记，在git rm 之后还需要提交commit才能从版本库中被删除</p>
-<blockquote>
-<p>$ git commit -m “remove test.txt”</p>
-</blockquote>
-<p>[master d46f35e] remove test.txt</p>
-<p> 1 file changed, 1 deletion(-)</p>
-<p> delete mode 100644 test.txt<br>现在，文件就从版本库中被删除了。</p>
-<p>3、另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：（经实验，如果版本库里面也被rm了就无法恢复了）</p>
-<blockquote>
-<p>$ git checkout – test.txt</p>
-</blockquote>
-<h4 id="远程库的使用"><a href="#远程库的使用" class="headerlink" title="远程库的使用"></a>远程库的使用</h4><p>一、添加远程库</p>
-<p>具体怎么添加，请小伙伴们，自行百度学习，具体实现就不说了，小编只在这里讲一下添加时候的一些命令：</p>
-<p>1、在本次仓里面运行命令：</p>
-<blockquote>
-<p>$ git remote add origin <a href="mailto:&#x67;&#105;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#117;&#98;&#46;&#99;&#x6f;&#x6d;">&#x67;&#105;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#117;&#98;&#46;&#99;&#x6f;&#x6d;</a>:pengzihao166/learngit.git</p>
-</blockquote>
-<p>注意：把上面的pengzihao166替换成你自己的GitHub账户名，否则，你在本地关联的就是我的远程库，关联没有问题，但是你以后推送是推不上去的，因为你的SSH Key公钥不在我的账户列表中。</p>
-<p>2、下一步，就可以把本地库的所有内容推送到远程库上：</p>
-<blockquote>
-<p>$ git push -u origin master</p>
-</blockquote>
-<p>把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。</p>
-<p>注意：由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。</p>
-<p>3、从现在起，只要本地作了提交，就可以通过命令：</p>
-<blockquote>
-<p>$ git push origin master</p>
-</blockquote>
-<p>二、删除远程库</p>
-<p>1、如果添加的时候地址写错了，或者就是想删除远程库，可以用git remote rm <name>命令。使用前，建议先用git remote -v查看远程库信息：</name></p>
-<blockquote>
-<p>$ git remote -v<br>origin  <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:pengzihao166/learn-git.git (fetch)</p>
-</blockquote>
-<p>origin  <a href="mailto:&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#x74;&#104;&#117;&#98;&#46;&#99;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#x74;&#104;&#117;&#98;&#46;&#99;&#x6f;&#109;</a>:pengzihao166/learn-git.git (push)</p>
-<p>然后，根据名字删除，比如删除origin：</p>
-<blockquote>
-<p>$ git remote rm origin</p>
-</blockquote>
-<p>三、从远程库克隆</p>
-<p>1、准备好远程库</p>
-<p>2、现在，远程库已经准备好了，下一步是用命令git clone克隆一个本地库：</p>
-<blockquote>
-<p>$ git clone <a href="mailto:&#103;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#117;&#98;&#46;&#x63;&#x6f;&#x6d;">&#103;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#117;&#98;&#46;&#x63;&#x6f;&#x6d;</a>:pengzihao166/gitskills.git</p>
-</blockquote>
-<p>注意把Git库的地址换成你自己的，然后进入gitskills目录看看，已经有README.md文件了。</p>
-<p>Git支持多种协议，包括https，但ssh协议速度最快。</p>
-<h4 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h4><p>一、创建并合并分支</p>
-<p>创建命令：</p>
-<blockquote>
-<p>git switch -c ***</p>
-</blockquote>
-<p>合并命令：</p>
-<blockquote>
-<p>git merge ***</p>
-</blockquote>
-<p>注意：***是你想取的名字</p>
-<p>二、分支管理策略</p>
-<p>合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
-<p>例：</p>
-<blockquote>
-<p>$ git merge –no-ff -m “merge with no-ff” dev</p>
-</blockquote>
-<p>合并后，我们用git log看看分支历史：</p>
-<blockquote>
-<p>$ git log –graph –pretty=oneline –abbrev-commit</p>
-</blockquote>
-<p>二、bug和feature分支：</p>
-<p>这两个分支总体来说用法都一样，就是在不同工作环境下使用的时间不一样，就拿bug来举例好了：</p>
-<p>1、当你接到一个修复一个代号101的bug的任务时,当前正在dev上进行的工作还没有提交。</p>
-<p>幸好，Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作：</p>
-<blockquote>
-<p>$ git stash<br>Saved working directory and index state WIP on dev: f52c633 add merge</p>
-</blockquote>
-<p>2、返回到主分支master之后，再建立一个新的分支issue-101，在此分支上面进行readme.txt文档的修改已知bug（经自己的实验发现一个问题，原来如果vi文件完成之后你使用前面提到的:wq或者wq!或者ZZ命令会发现，你的文件直接被git add了，只需要直接commit）</p>
-<blockquote>
-<p>$ git add readme.txt </p>
-</blockquote>
-<blockquote>
-<p>$ git commit -m “fix bug 101”</p>
-</blockquote>
-<p>[issue-101 a1d6694] fix bug 101</p>
-<p>1 file changed, 1 insertion(+), 1 deletion(-)</p>
-<p>3、再修改bug完成之后，返回到master分支，然后，再进行git merge –no-ff -m “merged bug fix 101” issue-101合并刚刚的issue-101分支修改的bug内容</p>
-<p>4、然后就是跳转到先前的Dev分支上面，继续以前的工作，通过git stash list 查找到刚刚git stash存好的工作区的文件，恢复方法如下：<br>     输入git stash list</p>
-<pre><code>  $ git stash list
-
-      stash@&#123;0&#125;: WIP on dev:ecd2437add merge
-
-   ①一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
-
-    另一种方式是用git stash pop，恢复的同时把stash内容也删了：
-    
-   ②$ git stash apply stash@&#123;0&#125;
-
-      stash@&#123;0&#125;就是list显示的前缀名
-</code></pre>
-<p>5、同样的bug，要在dev上修复，我们只需要把4c805e2 fix bug 101这个提交所做的修改“复制”到dev分支。注意：我们只想复制4c805e2 fix bug 101这个提交所做的修改，并不是把整个master分支merge过来。</p>
-<p>为了方便操作，Git专门提供了一个cherry-pick命令，让我们能复制一个特定的提交到当前分支：</p>
-<blockquote>
-<p>$ git branch</p>
-</blockquote>
-<ul>
-<li><p>dev（此时在dev分支上面）</p>
-<p>master</p>
-</li>
-</ul>
-<blockquote>
-<p>$ git cherry-pick a1d6694</p>
-</blockquote>
-<p>[master 1d4b803] fix bug 101</p>
-<p> 1 file changed, 1 insertion(+), 1 deletion(-)</p>
-<h4 id="标签管理："><a href="#标签管理：" class="headerlink" title="标签管理："></a>标签管理：</h4><p>一、创建标签：</p>
-<p>1、直接法：</p>
-<blockquote>
-<p>$ git branch</p>
-</blockquote>
-<ul>
-<li>dev<br>master<blockquote>
-<p>$ git checkout master</p>
-</blockquote>
-</li>
-</ul>
-<p>Switched to branch ‘master’</p>
-<p>然后，敲命令git tag <name>就可以打一个新标签：</name></p>
-<blockquote>
-<p>$ git tag v1.0</p>
-</blockquote>
-<p>可以用命令git tag查看所有标签：</p>
-<blockquote>
-<p>$ git tag</p>
-</blockquote>
-<p>v1.0</p>
-<p>2、默认标签是打在最新提交的commit上的。有时候，如果忘了打标签，比如，现在已经是周五了，但应该在周一打的标签没有打，怎么办？</p>
-<p>方法是找到历史提交的commit id，然后打上就可以了：</p>
-<blockquote>
-<p>$ git log –pretty=oneline –abbrev-commit</p>
-</blockquote>
-<p>12a631b (HEAD -&gt; master, tag: v1.0, origin/master) </p>
-<p>merged bug fix 101</p>
-<p>4c805e2 fix bug 101</p>
-<p>e1e9c68 merge with no-ff</p>
-<p>f52c633 add merge</p>
-<p>比方说要对add merge这次提交打标签，它对应的commit id是f52c633，敲入命令：</p>
-<blockquote>
-<p>$ git tag v0.9 f52c633</p>
-</blockquote>
-<p>再用命令git tag查看标签：</p>
-<blockquote>
-<p>$ git tag</p>
-</blockquote>
-<p>v0.9</p>
-<p>v1.0</p>
-<p>注意，标签不是按时间顺序列出，而是按字母排序的。可以用git show <tagname>查看标签信息：</tagname></p>
-<blockquote>
-<p>$ git show v0.9</p>
-</blockquote>
-<p>可以看到，v0.9确实打在add merge这次提交上。</p>
-<p>还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：</p>
-<blockquote>
-<p>$ git tag -a v0.1 -m “version 0.1 released” 1094adb</p>
-</blockquote>
-<p>用命令git show <tagname>可以看到说明文字：</tagname></p>
-<blockquote>
-<p>$ git show v0.1\</p>
-</blockquote>
-<p>二、操作标签</p>
-<p>命令git push origin <tagname>可以推送一个本地标签；</tagname></p>
-<p>命令git push origin –tags可以推送全部未推送过的本地标签；</p>
-<p>命令git tag -d <tagname>可以删除一个本地标签；</tagname></p>
-<p>命令git push origin :refs/tags/<tagname>可以删除一个远程标签。</tagname></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&ensp; &ensp;今天的Git命令的使用，就到此结束了，要是有啥疑惑的小伙伴可以去自行百度或者加上我的联系方式，联系我奥。</p>
-<p>&ensp; &ensp;部分内容转自<a href="https://www.liaoxuefeng.com/wiki/896043488029600">廖雪峰老师的网站</a>，如有侵权，请立刻联系小编进行修改完善。</p>
-<pre><code>                                                              ---来自一个小白的真实学习笔记
-</code></pre>
 ]]></content>
       <tags>
         <tag>Git+Hexo</tag>
