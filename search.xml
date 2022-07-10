@@ -1557,4 +1557,19 @@
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;——小八</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>最近的成长</title>
+    <url>/2022/07/10/%E6%9C%80%E8%BF%91%E7%9A%84%E6%88%90%E9%95%BF/</url>
+    <content><![CDATA[<p>&emsp;&emsp;你好，我是小八，好久不见，不知不觉停更我的<a href="https://xiaobazeo.com/">blog</a>已经将近半年了，不知道的，可能是觉得大二下的我开始颓废了，我可以在这里说NO，你猜错了，我只是最近在闲暇之余花更多的时间在我前面<a href="https://xiaobazeo.com/2022/01/01/2021-backing/">一篇博客</a>提到的项目中——“微布校园”，我们团队开发了一款基于微信生态环境的微信小程序和APP——微布校园，目前也有很多我校大学生在使用我们的产品，而我负责的主要是小程序端开发和Java后端开发，算得上是个前后端啥都干的小菜鸡吧。</p>
+<p>&emsp;&emsp;不知不觉，微布校园的诞生已经半年之久了，用户量也达到了我们的预期估计。在这段参与开发的过程中，通过向几个在大厂工作的学长请教，交流，我发现了很多开发过程中需要注意的小问题，而这些也丰富积累了我的开发经验。比如 刚开始学习使用mina框架开发小程序的我过于小白，其实有些icon只需要写一个class改变其样式即可，而我当时却给每个icon单独写了一个class样式，现在想起来都觉得自己真的好蠢啊，hhhhhhh~</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/image-20220710223856616.png" alt="小白受教ing"></p>
+<p>&emsp;&emsp;还有这样的：当时还记得是因为我们开发的时候，提到了tcp协议，而我又看到过一篇博客说http3.0的TCP被弃用了，就开始了这个话题。。。当时还从计网知识转到了计组的相关探讨，hhhhhhh，而且我才知道一个安卓手机小知识，这里也分享给大家：安卓大多数手机用WiFi给电脑传数据，比用数据线快，因为很多手机接口用的USB2.0协议，虽然协议写的是60M，但一般2.0不超过30M</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/image-20220710223300695.png" alt="请教计网相关问题"></p>
+<p>&emsp;&emsp;好在我们的不断努力下，微布校园APP和小程序都成功诞生啦~</p>
+]]></content>
+      <tags>
+        <tag>程序人生</tag>
+        <tag>回忆</tag>
+      </tags>
+  </entry>
 </search>
