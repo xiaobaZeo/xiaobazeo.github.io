@@ -1,0 +1,466 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>小八学习git从0到基本运用 | HUT菜鸟小八的博客</title><meta name="keywords" content="Git+Hexo"><meta name="author" content="xiaoba"><meta name="copyright" content="xiaoba"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言：有一说一，刚刚步入计算机大二的我，这个Github在我的认知里面一直只是一个大牛从中copy代码的网站，我对其的了解也仅仅在于抖音的“黑马程序员”里面的人说的这个网站很多大牛，才会使用。  &amp;emsp;&amp;emsp;就在前几天，我收到了我的学长ConeZhang（名字都不透露了，后面简写：驰哥）给我发的几条信息。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小八学习git从0到基本运用">
+<meta property="og:url" content="http://xiaobazeo.github.io/2021/11/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:site_name" content="HUT菜鸟小八的博客">
+<meta property="og:description" content="前言：有一说一，刚刚步入计算机大二的我，这个Github在我的认知里面一直只是一个大牛从中copy代码的网站，我对其的了解也仅仅在于抖音的“黑马程序员”里面的人说的这个网站很多大牛，才会使用。  &amp;emsp;&amp;emsp;就在前几天，我收到了我的学长ConeZhang（名字都不透露了，后面简写：驰哥）给我发的几条信息。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/gitInterface.png?versionId=CAEQGBiBgIDT0.vF7hciIGE0NWY0NDFhZWEwNTQzY2FhMjkwMzQ3NjczODZkMTkw">
+<meta property="article:published_time" content="2021-11-28T04:20:02.000Z">
+<meta property="article:modified_time" content="2025-03-11T14:37:45.474Z">
+<meta property="article:author" content="xiaoba">
+<meta property="article:tag" content="Git+Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/gitInterface.png?versionId=CAEQGBiBgIDT0.vF7hciIGE0NWY0NDFhZWEwNTQzY2FhMjkwMzQ3NjczODZkMTkw"><link rel="shortcut icon" href="/img/touxiang3.jpg"><link rel="canonical" href="http://xiaobazeo.github.io/2021/11/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '小八学习git从0到基本运用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-11 22:37:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="HUT菜鸟小八的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/gitInterface.png?versionId=CAEQGBiBgIDT0.vF7hciIGE0NWY0NDFhZWEwNTQzY2FhMjkwMzQ3NjczODZkMTkw')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">HUT菜鸟小八的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">小八学习git从0到基本运用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-28T04:20:02.000Z" title="发表于 2021-11-28 12:20:02">2021-11-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-11T14:37:45.474Z" title="更新于 2025-03-11 22:37:45">2025-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="小八学习git从0到基本运用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p style="text-indent:20px;">有一说一，刚刚步入计算机大二的我，这个Github在我的认知里面一直只是一个大牛从中copy代码的网站，我对其的了解也仅仅在于抖音的“黑马程序员”里面的人说的这个网站很多大牛，才会使用。</p>
+
+<p>&emsp;&emsp;就在前几天，我收到了我的学长ConeZhang（名字都不透露了，后面简写：驰哥）给我发的几条信息。</p>
+<span id="more"></span>
+<img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/QQ%E5%9B%BE%E7%89%8720211204214135.jpg?versionId=CAEQFxiBgICF.t.W7BciIDEyZDZhNTYwMDY4YzRmYTliOWE3NDgyOGZkYzBhMWI3">
+
+<img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/QQ%E5%9B%BE%E7%89%8720211204214217.jpg?versionId=CAEQFxiBgMCYhuCW7BciIDY5OWFiMDE2NGRiYzRkM2Q4MGNiYjg3M2MzMTI4YTY0">
+
+<p>&emsp;&emsp;看到这些消息，我直接开心的起飞，不知道怎么用语言来形容了，当时内心OS：woc！！这可是同时拿到百度，腾讯，快手sp甚至ssp的offer，最后去了字节的大佬啊，能带上我做项目，什么概念！！我上辈子肯定积了不少德，哈哈哈哈，说到驰哥，真就是机缘巧合，我还记得我第一次跟驰哥有了联系方式居然就在我预科刚入校的时候，因为学校教务系统的密码，忘记了，然后通过多方路径找到了驰哥的联系方式，然后帮我修改了密码，正巧我打算大一选择的就是计算机专业。</p>
+<p>&emsp;&emsp;好了好了，言归正传，就在2021-11-26 18：33 驰哥给我发来了消息，要我赶紧这个周末学习完成，收到这个任务，我立刻马上关闭了LOL，开始了Git煎熬之旅。</p>
+<h3 id="Git的起源及比较："><a href="#Git的起源及比较：" class="headerlink" title="Git的起源及比较："></a>Git的起源及比较：</h3><p>&emsp;&emsp;我打开了驰哥发给我的学习网站，开始对Git的初步了解，发现原来Linux开发了Git及github网站，而Git与类似网站有不同之处就是，CVS以及SVN都是集中式的版本控制系统，但是Git是分布式的版本系统，但是集中式的系统最大毛病就是必须联网才能工作，如果在局域网内还好，带宽够大，速度够快，可如果在互联网上，遇到网速慢的话，可能提交一个10M的文件就需要几十分钟，这还不得把人给憋死啊？</p>
+<h3 id="Git的安装以及创建远程仓库："><a href="#Git的安装以及创建远程仓库：" class="headerlink" title="Git的安装以及创建远程仓库："></a>Git的安装以及创建远程仓库：</h3><p>&emsp;&emsp;个人觉得真没什么好说的，用大一老师lq老师说的，不会就给我多安装几次就会了，要是电脑出问题了，就重装系统，一举多得，还能自学安装系统，要是看到这个博客的小伙伴，不知道怎么去安装，可以上我b大，或者在<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600">廖雪峰老师的网站</a>进行学习，实在还是不会，可以加我的QQ奥。</p>
+<h2 id="Git的用法简介："><a href="#Git的用法简介：" class="headerlink" title="Git的用法简介："></a>Git的用法简介：</h2><h3 id="一、创建新的版本库"><a href="#一、创建新的版本库" class="headerlink" title="一、创建新的版本库"></a>一、创建新的版本库</h3><p>&emsp;&emsp;1.打开git bash找到一个非c盘的合适位置，来做创建一个空目录（我以d盘为例，创建一个文件夹learngit）<br>(输入语句里面含$)</p>
+<blockquote>
+<p>$mkdir /d/learngit</p>
+</blockquote>
+<blockquote>
+<p>$cd /d/learngit</p>
+</blockquote>
+<blockquote>
+<p>$pwd /d/learngit</p>
+</blockquote>
+<p>2.通过git init命令进行git仓库初始化</p>
+<blockquote>
+<p>$git init</p>
+</blockquote>
+<p>Initialized empty Git repository in D:/learngit/.git/</p>
+<p>3.通过vi readme.txt创建一个新的文本框</p>
+<blockquote>
+<p>$vi readme.txt</p>
+</blockquote>
+<p>4.跳转到编辑界面，按下insert（ins）进行编辑，编辑完成之后按一下esc，再输入:wq进行退出(听我一个正在学Linux系统的室友告诉我，如果文档是只读的话，进行修改了的，就按:wq!进行强制退出)</p>
+<p>5.用命令git commit告诉Git，把文件提交到仓库，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。</p>
+<blockquote>
+<p>$git commit -m”wrote a readme file “</p>
+</blockquote>
+<p>[master (root-commit) df7ffd5] wrote a readme file</p>
+<p> 1 file changed, 1 insertion(+)</p>
+<p> create mode 100644 readme.txt</p>
+<h3 id="二、其他基本命令的使用"><a href="#二、其他基本命令的使用" class="headerlink" title="二、其他基本命令的使用"></a>二、其他基本命令的使用</h3><h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><p>&emsp;&emsp;1、git log命令显示从最近到最远的提交日志，我们可以看到3次提交，最近的一次是append GPL，上一次是add distributed，最早的一次是wrote a readme file。</p>
+<p>如果嫌输出信息太多，看得眼花缭乱的，可以试试加上–pretty=oneline参数：</p>
+<blockquote>
+<p>$ git log –pretty=oneline</p>
+</blockquote>
+<p>&emsp;&emsp;2、现在，我们要把当前版本append GPL回退到上一个版本add distributed，就可以使用git reset命令：</p>
+<blockquote>
+<p>$ git reset –hard HEAD^</p>
+</blockquote>
+<p>&emsp;&emsp;在Git中，用HEAD表示当前版本，也就是最新的提交1094adb…（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。</p>
+<p>&emsp;&emsp;3、最新的那个版本append GPL已经看不到了！好比你从21世纪坐时光穿梭机来到了19世纪，想再回去已经回不去了，肿么办？</p>
+<p>&emsp;&emsp;办法其实还是有的，只要上面的命令行窗口还没有被关掉，你就可以顺着往上找啊找啊，找到那个append GPL的commit id是1094adb…，于是就可以指定回到未来的某个版本：</p>
+<blockquote>
+<p>$ git reset –hard 1094a</p>
+</blockquote>
+<p>HEAD is now at 83b0afe append GPL</p>
+<p>&emsp;&emsp;现在，你回退到了某个版本，关掉了电脑，第二天早上就后悔了，想恢复到新版本怎么办？找不到新版本的commit id怎么办？</p>
+<p>&emsp;&emsp;在Git中，总是有后悔药可以吃的。当你用$ git reset –hard HEAD^回退到add distributed版本时，再想恢复到append GPL，就必须找到append GPL的commit id。Git提供了一个命令git reflog用来记录你的每一次命令：</p>
+<p>&emsp;&emsp;4、$ git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
+<h4 id="管理修改"><a href="#管理修改" class="headerlink" title="管理修改"></a>管理修改</h4><p>&emsp;&emsp;1、每次修改，如果不用git add到暂存区，那就不会加入到commit中。</p>
+<p>&emsp;&emsp;2、git diff HEAD – readme.txt命令可以查看工作区和版本库里面最新版本的区别：</p>
+<p>diff –git a/readme.txt b/readme.txt<br>index 76d770f..a9c5755 100644<br>— a/readme.txt<br>+++ b/readme.txt<br>@@ -1,4 +1,4 @@<br> Git is a distributed version control system.<br> Git is free software distributed under the GPL.<br> Git has a mutable index called stage.<br>-Git tracks changes.<br>+Git tracks changes of files.</p>
+<h4 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h4><blockquote>
+<p>$ git status</p>
+</blockquote>
+<p>On branch master</p>
+<p>Changes not staged for commit:</p>
+<p>  (use “git add <file>…” to update what will be committed)</file></p>
+<p>  (use “git checkout – <file>…” to discard changes in working directory)</file></p>
+<pre><code>modified:   readme.txt
+</code></pre>
+<p>no changes added to commit (use “git add” and/or “git commit -a”)</p>
+<p>你可以发现，Git会告诉你，git checkout – file可以丢弃工作区的修改：</p>
+<blockquote>
+<p>$ git checkout – readme.txt</p>
+</blockquote>
+<p>2、现在假定是凌晨3点，你不但写了一些胡话，还git add到暂存区了：</p>
+<p>庆幸的是，在commit之前，你发现了这个问题。用git status查看一下，修改只是添加到了暂存区，还没有提交：</p>
+<p>Git同样告诉我们，用命令git reset HEAD <file>可以把暂存区的修改撤销掉（unstage），重新放回工作区：</file></p>
+<blockquote>
+<p>$ git reset HEAD readme.txt</p>
+</blockquote>
+<p>git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。</p>
+<p>再用git status查看一下，现在暂存区是干净的，工作区有修改：</p>
+<p>还记得如何丢弃工作区的修改吗？</p>
+<blockquote>
+<p>$ git checkout – readme.txt</p>
+</blockquote>
+<h4 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h4><p>1、一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了：</p>
+<blockquote>
+<p>$ rm test.txt</p>
+</blockquote>
+<p>这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，git status命令会立刻告诉你哪些文件被删除了：</p>
+<p>rm之后你有两个选择，一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit：</p>
+<blockquote>
+<p>$ git rm test.txt</p>
+</blockquote>
+<p>rm ‘test.txt’</p>
+<p>2、切记，在git rm 之后还需要提交commit才能从版本库中被删除</p>
+<blockquote>
+<p>$ git commit -m “remove test.txt”</p>
+</blockquote>
+<p>[master d46f35e] remove test.txt</p>
+<p> 1 file changed, 1 deletion(-)</p>
+<p> delete mode 100644 test.txt<br>现在，文件就从版本库中被删除了。</p>
+<p>3、另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：（经实验，如果版本库里面也被rm了就无法恢复了）</p>
+<blockquote>
+<p>$ git checkout – test.txt</p>
+</blockquote>
+<h4 id="远程库的使用"><a href="#远程库的使用" class="headerlink" title="远程库的使用"></a>远程库的使用</h4><p>一、添加远程库</p>
+<p>具体怎么添加，请小伙伴们，自行百度学习，具体实现就不说了，小编只在这里讲一下添加时候的一些命令：</p>
+<p>1、在本次仓里面运行命令：</p>
+<blockquote>
+<p>$ git remote add origin <a href="mailto:&#103;&#105;&#116;&#64;&#x67;&#105;&#116;&#x68;&#x75;&#98;&#46;&#99;&#x6f;&#x6d;">&#103;&#105;&#116;&#64;&#x67;&#105;&#116;&#x68;&#x75;&#98;&#46;&#99;&#x6f;&#x6d;</a>:pengzihao166/learngit.git</p>
+</blockquote>
+<p>注意：把上面的pengzihao166替换成你自己的GitHub账户名，否则，你在本地关联的就是我的远程库，关联没有问题，但是你以后推送是推不上去的，因为你的SSH Key公钥不在我的账户列表中。</p>
+<p>2、下一步，就可以把本地库的所有内容推送到远程库上：</p>
+<blockquote>
+<p>$ git push -u origin master</p>
+</blockquote>
+<p>把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。</p>
+<p>注意：由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。</p>
+<p>3、从现在起，只要本地作了提交，就可以通过命令：</p>
+<blockquote>
+<p>$ git push origin master</p>
+</blockquote>
+<p>二、删除远程库</p>
+<p>1、如果添加的时候地址写错了，或者就是想删除远程库，可以用git remote rm <name>命令。使用前，建议先用git remote -v查看远程库信息：</name></p>
+<blockquote>
+<p>$ git remote -v<br>origin  <a href="mailto:&#103;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#x6d;">&#103;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#x6d;</a>:pengzihao166/learn-git.git (fetch)</p>
+</blockquote>
+<p>origin  <a href="mailto:&#x67;&#105;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#x75;&#98;&#46;&#99;&#111;&#x6d;">&#x67;&#105;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#x75;&#98;&#46;&#99;&#111;&#x6d;</a>:pengzihao166/learn-git.git (push)</p>
+<p>然后，根据名字删除，比如删除origin：</p>
+<blockquote>
+<p>$ git remote rm origin</p>
+</blockquote>
+<p>三、从远程库克隆</p>
+<p>1、准备好远程库</p>
+<p>2、现在，远程库已经准备好了，下一步是用命令git clone克隆一个本地库：</p>
+<blockquote>
+<p>$ git clone <a href="mailto:&#x67;&#x69;&#116;&#64;&#x67;&#105;&#116;&#x68;&#117;&#x62;&#x2e;&#x63;&#x6f;&#109;">&#x67;&#x69;&#116;&#64;&#x67;&#105;&#116;&#x68;&#117;&#x62;&#x2e;&#x63;&#x6f;&#109;</a>:pengzihao166/gitskills.git</p>
+</blockquote>
+<p>注意把Git库的地址换成你自己的，然后进入gitskills目录看看，已经有README.md文件了。</p>
+<p>Git支持多种协议，包括https，但ssh协议速度最快。</p>
+<h4 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h4><p>一、创建并合并分支</p>
+<p>创建命令：</p>
+<blockquote>
+<p>git switch -c ***</p>
+</blockquote>
+<p>合并命令：</p>
+<blockquote>
+<p>git merge ***</p>
+</blockquote>
+<p>注意：***是你想取的名字</p>
+<p>二、分支管理策略</p>
+<p>合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
+<p>例：</p>
+<blockquote>
+<p>$ git merge –no-ff -m “merge with no-ff” dev</p>
+</blockquote>
+<p>合并后，我们用git log看看分支历史：</p>
+<blockquote>
+<p>$ git log –graph –pretty=oneline –abbrev-commit</p>
+</blockquote>
+<p>二、bug和feature分支：</p>
+<p>这两个分支总体来说用法都一样，就是在不同工作环境下使用的时间不一样，就拿bug来举例好了：</p>
+<p>1、当你接到一个修复一个代号101的bug的任务时,当前正在dev上进行的工作还没有提交。</p>
+<p>幸好，Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作：</p>
+<blockquote>
+<p>$ git stash<br>Saved working directory and index state WIP on dev: f52c633 add merge</p>
+</blockquote>
+<p>2、返回到主分支master之后，再建立一个新的分支issue-101，在此分支上面进行readme.txt文档的修改已知bug（经自己的实验发现一个问题，原来如果vi文件完成之后你使用前面提到的:wq或者wq!或者ZZ命令会发现，你的文件直接被git add了，只需要直接commit）</p>
+<blockquote>
+<p>$ git add readme.txt </p>
+</blockquote>
+<blockquote>
+<p>$ git commit -m “fix bug 101”</p>
+</blockquote>
+<p>[issue-101 a1d6694] fix bug 101</p>
+<p>1 file changed, 1 insertion(+), 1 deletion(-)</p>
+<p>3、再修改bug完成之后，返回到master分支，然后，再进行git merge –no-ff -m “merged bug fix 101” issue-101合并刚刚的issue-101分支修改的bug内容</p>
+<p>4、然后就是跳转到先前的Dev分支上面，继续以前的工作，通过git stash list 查找到刚刚git stash存好的工作区的文件，恢复方法如下：<br>     输入git stash list</p>
+<pre><code>  $ git stash list
+
+      stash@&#123;0&#125;: WIP on dev:ecd2437add merge
+
+   ①一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+
+    另一种方式是用git stash pop，恢复的同时把stash内容也删了：
+    
+   ②$ git stash apply stash@&#123;0&#125;
+
+      stash@&#123;0&#125;就是list显示的前缀名
+</code></pre>
+<p>5、同样的bug，要在dev上修复，我们只需要把4c805e2 fix bug 101这个提交所做的修改“复制”到dev分支。注意：我们只想复制4c805e2 fix bug 101这个提交所做的修改，并不是把整个master分支merge过来。</p>
+<p>为了方便操作，Git专门提供了一个cherry-pick命令，让我们能复制一个特定的提交到当前分支：</p>
+<blockquote>
+<p>$ git branch</p>
+</blockquote>
+<ul>
+<li><p>dev（此时在dev分支上面）</p>
+<p>master</p>
+</li>
+</ul>
+<blockquote>
+<p>$ git cherry-pick a1d6694</p>
+</blockquote>
+<p>[master 1d4b803] fix bug 101</p>
+<p> 1 file changed, 1 insertion(+), 1 deletion(-)</p>
+<h4 id="标签管理："><a href="#标签管理：" class="headerlink" title="标签管理："></a>标签管理：</h4><p>一、创建标签：</p>
+<p>1、直接法：</p>
+<blockquote>
+<p>$ git branch</p>
+</blockquote>
+<ul>
+<li>dev<br>master<blockquote>
+<p>$ git checkout master</p>
+</blockquote>
+</li>
+</ul>
+<p>Switched to branch ‘master’</p>
+<p>然后，敲命令git tag <name>就可以打一个新标签：</name></p>
+<blockquote>
+<p>$ git tag v1.0</p>
+</blockquote>
+<p>可以用命令git tag查看所有标签：</p>
+<blockquote>
+<p>$ git tag</p>
+</blockquote>
+<p>v1.0</p>
+<p>2、默认标签是打在最新提交的commit上的。有时候，如果忘了打标签，比如，现在已经是周五了，但应该在周一打的标签没有打，怎么办？</p>
+<p>方法是找到历史提交的commit id，然后打上就可以了：</p>
+<blockquote>
+<p>$ git log –pretty=oneline –abbrev-commit</p>
+</blockquote>
+<p>12a631b (HEAD -&gt; master, tag: v1.0, origin/master) </p>
+<p>merged bug fix 101</p>
+<p>4c805e2 fix bug 101</p>
+<p>e1e9c68 merge with no-ff</p>
+<p>f52c633 add merge</p>
+<p>比方说要对add merge这次提交打标签，它对应的commit id是f52c633，敲入命令：</p>
+<blockquote>
+<p>$ git tag v0.9 f52c633</p>
+</blockquote>
+<p>再用命令git tag查看标签：</p>
+<blockquote>
+<p>$ git tag</p>
+</blockquote>
+<p>v0.9</p>
+<p>v1.0</p>
+<p>注意，标签不是按时间顺序列出，而是按字母排序的。可以用git show <tagname>查看标签信息：</tagname></p>
+<blockquote>
+<p>$ git show v0.9</p>
+</blockquote>
+<p>可以看到，v0.9确实打在add merge这次提交上。</p>
+<p>还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：</p>
+<blockquote>
+<p>$ git tag -a v0.1 -m “version 0.1 released” 1094adb</p>
+</blockquote>
+<p>用命令git show <tagname>可以看到说明文字：</tagname></p>
+<blockquote>
+<p>$ git show v0.1\</p>
+</blockquote>
+<p>二、操作标签</p>
+<p>命令git push origin <tagname>可以推送一个本地标签；</tagname></p>
+<p>命令git push origin –tags可以推送全部未推送过的本地标签；</p>
+<p>命令git tag -d <tagname>可以删除一个本地标签；</tagname></p>
+<p>命令git push origin :refs/tags/<tagname>可以删除一个远程标签。</tagname></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&ensp; &ensp;今天的Git命令的使用，就到此结束了，要是有啥疑惑的小伙伴可以去自行百度或者加上我的联系方式，联系我奥。</p>
+<p>&ensp; &ensp;部分内容转自<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600">廖雪峰老师的网站</a>，如有侵权，请立刻联系小编进行修改完善。</p>
+<pre><code>                                                              ---来自一个小白的真实学习笔记
+</code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">xiaoba</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://xiaobazeo.github.io/2021/11/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">http://xiaobazeo.github.io/2021/11/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://xiaobazeo.github.io" target="_blank">HUT菜鸟小八的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git-Hexo/">Git+Hexo</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_email"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2021/11/29/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Git%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"><img class="prev-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/git和hexo搭建个人博客/%E5%8D%9A%E5%AE%A2%E5%B0%81%E9%9D%A2.png?versionId=CAEQGBiBgID7ru7F7hciIDEzZTA0MGU2MGFlZTRhYTk5NmU0YWYwNmY3NzUwYWNl" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">自学如何使用Git+Hexo搭建个人博客</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/11/29/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Git%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="自学如何使用Git+Hexo搭建个人博客"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/git和hexo搭建个人博客/%E5%8D%9A%E5%AE%A2%E5%B0%81%E9%9D%A2.png?versionId=CAEQGBiBgID7ru7F7hciIDEzZTA0MGU2MGFlZTRhYTk5NmU0YWYwNmY3NzUwYWNl" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-29</div><div class="title">自学如何使用Git+Hexo搭建个人博客</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xiaoba</div><div class="author-info__description">更多请关注微信公众号“小八的编程之路”，那上面会实时更新一些知识经验分享~</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xiaobazeo"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobazeo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:166918502@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">QQ:166918502,有事请注明来意</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">前言：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E7%9A%84%E8%B5%B7%E6%BA%90%E5%8F%8A%E6%AF%94%E8%BE%83%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">Git的起源及比较：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E7%9A%84%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">Git的安装以及创建远程仓库：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git%E7%9A%84%E7%94%A8%E6%B3%95%E7%AE%80%E4%BB%8B%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">Git的用法简介：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84%E7%89%88%E6%9C%AC%E5%BA%93"><span class="toc-number">2.1.</span> <span class="toc-text">一、创建新的版本库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%B6%E4%BB%96%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">2.2.</span> <span class="toc-text">二、其他基本命令的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="toc-number">2.2.1.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E4%BF%AE%E6%94%B9"><span class="toc-number">2.2.2.</span> <span class="toc-text">管理修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E4%BF%AE%E6%94%B9"><span class="toc-number">2.2.3.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="toc-number">2.2.4.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">2.2.5.</span> <span class="toc-text">远程库的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="toc-number">2.2.6.</span> <span class="toc-text">分支管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86%EF%BC%9A"><span class="toc-number">2.2.7.</span> <span class="toc-text">标签管理：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number"></span> <span class="toc-text">总结</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/mhy-test01/" title="mhy-test01"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mhy-test01"/></a><div class="content"><a class="title" href="/2024/03/10/mhy-test01/" title="mhy-test01">mhy-test01</a><time datetime="2024-03-10T14:20:16.000Z" title="发表于 2024-03-10 22:20:16">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/Java-Deque/" title="Java-Deque"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java-Deque"/></a><div class="content"><a class="title" href="/2024/03/10/Java-Deque/" title="Java-Deque">Java-Deque</a><time datetime="2024-03-10T02:44:02.000Z" title="发表于 2024-03-10 10:44:02">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryTwo"/></a><div class="content"><a class="title" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo">MySQL-summaryTwo</a><time datetime="2023-12-19T05:22:53.000Z" title="发表于 2023-12-19 13:22:53">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryOne"/></a><div class="content"><a class="title" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne">MySQL-summaryOne</a><time datetime="2023-12-18T07:57:36.000Z" title="发表于 2023-12-18 15:57:36">2023-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="web-coursePushErrorSolution"/></a><div class="content"><a class="title" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution">web-coursePushErrorSolution</a><time datetime="2023-12-12T06:38:43.000Z" title="发表于 2023-12-12 14:38:43">2023-12-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/gitInterface.png?versionId=CAEQGBiBgIDT0.vF7hciIGE0NWY0NDFhZWEwNTQzY2FhMjkwMzQ3NjczODZkMTkw')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By xiaoba</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,  welcome  to  my  <a  target="_blank" rel="noopener" href="https://xiaobazeo.com/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'L4hC6khKXGdHXK53aAweTwbM-gzGzoHsz',
+      appKey: 'x6SUHaNHjueSamLFU7ua9UnE',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

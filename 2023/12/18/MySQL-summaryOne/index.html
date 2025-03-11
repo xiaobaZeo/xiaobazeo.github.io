@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MySQL-summaryOne | HUT菜鸟小八的博客</title><meta name="keywords" content="MySQL"><meta name="author" content="xiaoba"><meta name="copyright" content="xiaoba"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一条SQL查询语句的执行流程我们先看一下，MySQL的基本示意图，并逐个解析每个部件的作用。  Server层主要包含：连接器，查询缓存，分析器，优化器，执行器  这里提一嘴，查询缓存到MySQL8.0版本开始就被干掉了，具体原因往下看。  连接器：负责客户端和MySQL建立连接，获取权限，维持和管理连接，一般通过mysql -h*  -P*  -u* -p经过TCP三次握手协议之后，来连接上My">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL-summaryOne">
+<meta property="og:url" content="http://xiaobazeo.github.io/2023/12/18/MySQL-summaryOne/index.html">
+<meta property="og:site_name" content="HUT菜鸟小八的博客">
+<meta property="og:description" content="一条SQL查询语句的执行流程我们先看一下，MySQL的基本示意图，并逐个解析每个部件的作用。  Server层主要包含：连接器，查询缓存，分析器，优化器，执行器  这里提一嘴，查询缓存到MySQL8.0版本开始就被干掉了，具体原因往下看。  连接器：负责客户端和MySQL建立连接，获取权限，维持和管理连接，一般通过mysql -h*  -P*  -u* -p经过TCP三次握手协议之后，来连接上My">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png">
+<meta property="article:published_time" content="2023-12-18T07:57:36.000Z">
+<meta property="article:modified_time" content="2025-03-11T14:37:49.156Z">
+<meta property="article:author" content="xiaoba">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png"><link rel="shortcut icon" href="/img/touxiang3.jpg"><link rel="canonical" href="http://xiaobazeo.github.io/2023/12/18/MySQL-summaryOne/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL-summaryOne',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-11 22:37:49'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="HUT菜鸟小八的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">HUT菜鸟小八的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL-summaryOne</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-18T07:57:36.000Z" title="发表于 2023-12-18 15:57:36">2023-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-11T14:37:49.156Z" title="更新于 2025-03-11 22:37:49">2025-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL-summaryOne"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="一条SQL查询语句的执行流程"><a href="#一条SQL查询语句的执行流程" class="headerlink" title="一条SQL查询语句的执行流程"></a>一条SQL查询语句的执行流程</h2><p>我们先看一下，MySQL的基本示意图，并逐个解析每个部件的作用。</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20231218161453022.png" alt="摘自《MySQL45》，如有侵权可以联系本文作者删除"></p>
+<h3 id="Server层"><a href="#Server层" class="headerlink" title="Server层"></a>Server层</h3><p>主要包含：连接器，查询缓存，分析器，优化器，执行器</p>
+<blockquote>
+<p>这里提一嘴，查询缓存到MySQL8.0版本开始就被干掉了，具体原因往下看。</p>
+</blockquote>
+<h4 id="连接器："><a href="#连接器：" class="headerlink" title="连接器："></a>连接器：</h4><p>负责客户端和MySQL建立连接，获取权限，维持和管理连接，一般通过<code>mysql -h*  -P*  -u* -p</code>经过TCP三次握手协议之后，来连接上MySQL</p>
+<ul>
+<li>如果用户账号密码不对，就会收到一个<code>Access denied for user</code>的错误，然后客户端结束执行。</li>
+<li>如果用户账号密码正确，连接器就会在权限表中查出登录用户的权限，之后用户的所有相关操作都将依赖于刚刚所查询到的连接对应的权限。（如果管理员此时修改了你的权限，也不会影响到你现在的操作，除非重新登录创建连接）</li>
+</ul>
+<p>当一个连接长时间处于<code>sleep</code>状态的时候，默认（wait_timeout参数）8小时之后就会自动断开，连接又分为短连接和长连接，如果所有连接都是长连接，可能会导致内存占用太大，从而系统自动把长连接给OOM，一般表现就是MySQL的异常重启了。</p>
+<blockquote>
+<p>原因分析：长连接会导致内存占用变大，MySQL在执行过程中临时使用的内存是管理在连接对象里面的，只有当这个连接断开的时候才会释放，所以都使用长连接会导致内存占用不断地变大，最终导致内存OOM，进而导致MySQL重启</p>
+</blockquote>
+<h4 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h4><p>连接建立完成，就可以根据select语句查询缓存，之前是否执行过这条语句，之前执行过的语句以及结果都是以key-value的形式直接缓存到内存中（<strong>到这里，希望读者和我一起想想这样可能会导致什么问题？结合前面提到的MySQL后面摒弃了查询缓存。</strong>），如果执行过，直接从缓存里面返回结果即可。</p>
+<p><strong>查询缓存其实往往弊大于利，原因如下：</strong></p>
+<ul>
+<li>查询缓存很容易失效，只要对一张表更新（比如更新某个字段属性），那么这个表上的所有缓存就会清空，所以会出现还没有二次使用就会被清空的情况。（除非你有一个很久都不会更新的静态表，比如系统配置表，那么适合查询缓存，但是平常的业务表，多少都带点经常更新的操作）。</li>
+</ul>
+<p>如果要通过缓存查询，可以进行显式的语句查询，比如：<code>select SQL_CACHE * from Table where user_id = 10;</code>，而且MySQL提供了参数<code>query_cache_type</code>使得用户能自主控制是否使用查询缓存的操作。</p>
+<h4 id="分析器"><a href="#分析器" class="headerlink" title="分析器"></a>分析器</h4><p>如果没有命中缓存，就意味着开始真正执行语句了。</p>
+<p>首先MySQL会进行“词法分析”，也就是MySQL会根据执行语句里面的字符串、空格等符号识别出分别代表什么。比如：<code>select</code>代表这是一个查询语句，<code>where</code>代表需要根据这个关键词后面的条件去查询，字符串<code>user_id</code>代表是这张表的字段。</p>
+<p>然后就是进行“语法分析”，MySQL会根据输入的语句判断这条语句是否符合语法，不符合就会返回一个“You have an error in your SQL syntax”的错误提示，比如<code>elect * from user where user_id = 1;</code>这条语句，就是经典的语法错误，因为它的<code>select</code>写错了</p>
+<h4 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h4><p>在开始执行前，MySQL还会对你的语句进行优化，确定这条语句走什么索引，或者连表查询的时候确定表的连接顺序，简而言之就是决定选择使用哪一套方案，当优化器阶段结束之后，那么这个语句的具体执行方案也就确定下来。</p>
+<h4 id="执行器"><a href="#执行器" class="headerlink" title="执行器"></a>执行器</h4><p>通过优化器的优化之后，进入执行器阶段，开始执行语句，这个时候会判断一下你有没有对目标表的执行权限，如果没有就会返回错误。</p>
+<p>如果有权限就打开表执行，打开表的时候就会根据表的引擎定义，去使用这个引擎提供的接口对存储引擎进行相关操作。</p>
+<p>比如一个查询语句<code>select * from user where user_id = 25;</code>user_id`没有建立索引，执行流程如下：</p>
+<ol>
+<li>调用InnoDB引擎（没有特指的话，MySQL默认使用InnoDB）接口取这个表的第一行，判断这行记录的<code>user_id</code>是不是25，如果不是那么就跳过，如果是就保存在结果集中</li>
+<li>调用引擎接口取下一行，重复执行上述操作，直到取到这个表的最后一行</li>
+<li>执行器将上述遍历过程中满足条件的结果集，写入内存并返回给客户端。</li>
+</ol>
+<p>到此为止，一个查询语句的流程就走完了。<strong>一般情况下</strong>在慢查询日志中的<code>rows_examined</code>字段记录的是这个执行语句扫描了多少行，当然有些场景下，引擎扫描次数跟<code>rows_examined</code>并不是完全相同的。</p>
+<h3 id="存储引擎层"><a href="#存储引擎层" class="headerlink" title="存储引擎层"></a>存储引擎层</h3><p>主要用来存储和提取数据，但是其架构模式是插件式，所以支持多种存储引擎，比如InnoDB、MyISAM等</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>查询缓存在MySQL8.0被干掉了</li>
+<li>一条查询语句执行流程分为两种<ul>
+<li>客户端 - 连接器 - 查询缓存（缓存命中） - 返回结果</li>
+<li>客户端 - 连接器 - 查询缓存（缓存未命中） - 分析器 - 优化器 - 执行器 - 返回结果</li>
+</ul>
+</li>
+<li>连接器：客户端和MySQL连接，用户权限校验</li>
+<li>查询缓存：当前的查询语句是否前面缓存过，如果缓存过，直接从缓存中拿结果返回，否则继续往下执行</li>
+<li>分析器：进行词法和语法分析</li>
+<li>优化器：确定执行器应该执行哪套优化后的方案</li>
+<li>执行器：根据优化后的方案，调用对应引擎的接口，获取结果集并最终返回结果</li>
+</ul>
+<h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><ul>
+<li>优化器真的会每次都选最优的方案吗？如果不是，那么具体的确定方案流程是怎么样的呢？（比如索引确定，索引错选等）</li>
+<li>如果执行<code>select * from user where user_id = 20</code>报错<code>Unknown column user_id in where clause</code>在哪个阶段报出来的错误？</li>
+</ul>
+<blockquote>
+<p>以上问题，会在后续的文章中一一解决回答，因为我也还在慢慢学习。</p>
+<p>这些只是我临时思考的问题。如有侵权或文章内容错误，请各位大佬，私信或者联系邮箱<a href="mailto:&#120;&#x69;&#x61;&#x6f;&#98;&#x61;&#122;&#101;&#x6f;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#120;&#x69;&#x61;&#x6f;&#98;&#x61;&#122;&#101;&#x6f;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;</a>帮忙纠正。</p>
+</blockquote>
+<hr>
+<p>你好，我是小八，一个分享日常学习知识总结的在校大学生。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">xiaoba</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://xiaobazeo.github.io/2023/12/18/MySQL-summaryOne/">http://xiaobazeo.github.io/2023/12/18/MySQL-summaryOne/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://xiaobazeo.github.io" target="_blank">HUT菜鸟小八的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_email"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/12/19/MySQL-summaryTwo/"><img class="prev-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MySQL-summaryTwo</div></div></a></div><div class="next-post pull-right"><a href="/2023/12/12/web-coursePushErrorSolution/"><img class="next-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">web-coursePushErrorSolution</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/06/19/MySQL-Index/" title="MySQL-Index"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-19</div><div class="title">MySQL-Index</div></div></a></div><div><a href="/2023/06/01/MySQL-Transaction/" title="MySQL-Transaction"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-01</div><div class="title">MySQL-Transaction</div></div></a></div><div><a href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-19</div><div class="title">MySQL-summaryTwo</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xiaoba</div><div class="author-info__description">更多请关注微信公众号“小八的编程之路”，那上面会实时更新一些知识经验分享~</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xiaobazeo"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobazeo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:166918502@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">QQ:166918502,有事请注明来意</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E6%9D%A1SQL%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">一条SQL查询语句的执行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Server%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">Server层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%99%A8%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">连接器：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98"><span class="toc-number">1.1.2.</span> <span class="toc-text">查询缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">1.1.3.</span> <span class="toc-text">分析器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-number">1.1.4.</span> <span class="toc-text">优化器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%99%A8"><span class="toc-number">1.1.5.</span> <span class="toc-text">执行器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E5%B1%82"><span class="toc-number">1.2.</span> <span class="toc-text">存储引擎层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">问题：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/mhy-test01/" title="mhy-test01"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mhy-test01"/></a><div class="content"><a class="title" href="/2024/03/10/mhy-test01/" title="mhy-test01">mhy-test01</a><time datetime="2024-03-10T14:20:16.000Z" title="发表于 2024-03-10 22:20:16">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/Java-Deque/" title="Java-Deque"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java-Deque"/></a><div class="content"><a class="title" href="/2024/03/10/Java-Deque/" title="Java-Deque">Java-Deque</a><time datetime="2024-03-10T02:44:02.000Z" title="发表于 2024-03-10 10:44:02">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryTwo"/></a><div class="content"><a class="title" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo">MySQL-summaryTwo</a><time datetime="2023-12-19T05:22:53.000Z" title="发表于 2023-12-19 13:22:53">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryOne"/></a><div class="content"><a class="title" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne">MySQL-summaryOne</a><time datetime="2023-12-18T07:57:36.000Z" title="发表于 2023-12-18 15:57:36">2023-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="web-coursePushErrorSolution"/></a><div class="content"><a class="title" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution">web-coursePushErrorSolution</a><time datetime="2023-12-12T06:38:43.000Z" title="发表于 2023-12-12 14:38:43">2023-12-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By xiaoba</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,  welcome  to  my  <a  target="_blank" rel="noopener" href="https://xiaobazeo.com/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'L4hC6khKXGdHXK53aAweTwbM-gzGzoHsz',
+      appKey: 'x6SUHaNHjueSamLFU7ua9UnE',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

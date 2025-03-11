@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>面经- 星环科技Java实习 | HUT菜鸟小八的博客</title><meta name="keywords" content="面经"><meta name="author" content="xiaoba"><meta name="copyright" content="xiaoba"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="最高QPS是承受多少？服务器部署位置？目前是单体应用？为什么要使用雪花算法？（分布式id、雪花算法组成）有无发布订阅的功能？应用场景有哪些？Redis的应用场景是哪些？什么情况下会出现缓存雪崩？怎么防止缓存雪崩的问题？怎么保证数据库和redis的一致性问题？怎么解决用户禁言时间失效的问题？介绍一下Java集合ArrayList是基于什么实现的？(从ArrayList和Array的区别出发）Arra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面经- 星环科技Java实习">
+<meta property="og:url" content="http://xiaobazeo.github.io/2023/07/12/%E9%9D%A2%E7%BB%8F-%E6%98%9F%E7%8E%AF%E7%A7%91%E6%8A%80Java%E5%AE%9E%E4%B9%A0-2023-6-12/index.html">
+<meta property="og:site_name" content="HUT菜鸟小八的博客">
+<meta property="og:description" content="最高QPS是承受多少？服务器部署位置？目前是单体应用？为什么要使用雪花算法？（分布式id、雪花算法组成）有无发布订阅的功能？应用场景有哪些？Redis的应用场景是哪些？什么情况下会出现缓存雪崩？怎么防止缓存雪崩的问题？怎么保证数据库和redis的一致性问题？怎么解决用户禁言时间失效的问题？介绍一下Java集合ArrayList是基于什么实现的？(从ArrayList和Array的区别出发）Arra">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg">
+<meta property="article:published_time" content="2023-07-12T15:58:51.000Z">
+<meta property="article:modified_time" content="2025-03-11T14:37:45.473Z">
+<meta property="article:author" content="xiaoba">
+<meta property="article:tag" content="面经">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg"><link rel="shortcut icon" href="/img/touxiang3.jpg"><link rel="canonical" href="http://xiaobazeo.github.io/2023/07/12/%E9%9D%A2%E7%BB%8F-%E6%98%9F%E7%8E%AF%E7%A7%91%E6%8A%80Java%E5%AE%9E%E4%B9%A0-2023-6-12/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '面经- 星环科技Java实习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-11 22:37:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="HUT菜鸟小八的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">HUT菜鸟小八的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">面经- 星环科技Java实习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-12T15:58:51.000Z" title="发表于 2023-07-12 23:58:51">2023-07-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-11T14:37:45.473Z" title="更新于 2025-03-11 22:37:45">2025-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">542</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="面经- 星环科技Java实习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="最高QPS是承受多少？服务器部署位置？目前是单体应用？"><a href="#最高QPS是承受多少？服务器部署位置？目前是单体应用？" class="headerlink" title="最高QPS是承受多少？服务器部署位置？目前是单体应用？"></a>最高QPS是承受多少？服务器部署位置？目前是单体应用？</h2><h2 id="为什么要使用雪花算法？（分布式id、雪花算法组成）"><a href="#为什么要使用雪花算法？（分布式id、雪花算法组成）" class="headerlink" title="为什么要使用雪花算法？（分布式id、雪花算法组成）"></a>为什么要使用雪花算法？（分布式id、雪花算法组成）</h2><h2 id="有无发布订阅的功能？应用场景有哪些？"><a href="#有无发布订阅的功能？应用场景有哪些？" class="headerlink" title="有无发布订阅的功能？应用场景有哪些？"></a>有无发布订阅的功能？应用场景有哪些？</h2><h2 id="Redis的应用场景是哪些？"><a href="#Redis的应用场景是哪些？" class="headerlink" title="Redis的应用场景是哪些？"></a>Redis的应用场景是哪些？</h2><h2 id="什么情况下会出现缓存雪崩？怎么防止缓存雪崩的问题？"><a href="#什么情况下会出现缓存雪崩？怎么防止缓存雪崩的问题？" class="headerlink" title="什么情况下会出现缓存雪崩？怎么防止缓存雪崩的问题？"></a>什么情况下会出现缓存雪崩？怎么防止缓存雪崩的问题？</h2><h2 id="怎么保证数据库和redis的一致性问题？"><a href="#怎么保证数据库和redis的一致性问题？" class="headerlink" title="怎么保证数据库和redis的一致性问题？"></a>怎么保证数据库和redis的一致性问题？</h2><h2 id="怎么解决用户禁言时间失效的问题？"><a href="#怎么解决用户禁言时间失效的问题？" class="headerlink" title="怎么解决用户禁言时间失效的问题？"></a>怎么解决用户禁言时间失效的问题？</h2><h2 id="介绍一下Java集合"><a href="#介绍一下Java集合" class="headerlink" title="介绍一下Java集合"></a>介绍一下Java集合</h2><h2 id="ArrayList是基于什么实现的？-从ArrayList和Array的区别出发）"><a href="#ArrayList是基于什么实现的？-从ArrayList和Array的区别出发）" class="headerlink" title="ArrayList是基于什么实现的？(从ArrayList和Array的区别出发）"></a>ArrayList是基于什么实现的？(从ArrayList和Array的区别出发）</h2><h2 id="ArrayList的怎么动态扩容的？"><a href="#ArrayList的怎么动态扩容的？" class="headerlink" title="ArrayList的怎么动态扩容的？"></a>ArrayList的怎么动态扩容的？</h2><ol>
+<li><strong>初始化容量：</strong> 当你创建一个新的ArrayList对象时，它会分配一个初始容量，通常是10个元素的大小（这个值可以根据需要进行修改）。</li>
+<li><strong>添加元素：</strong> 当你向ArrayList中添加元素时，如果当前元素数量达到了容量上限(一般是元素数量到达9/10的时候)，就会触发动态扩容。</li>
+<li><strong>扩容操作：</strong> 在进行动态扩容时，ArrayList会创建一个新的更大容量的数组，然后将原数组中的元素复制到新数组中。</li>
+<li><strong>更新引用：</strong> 一旦新数组中的元素复制完成，ArrayList会更新内部引用，指向新的数组。</li>
+</ol>
+<h2 id="介绍一下JVM的内存区域（面试官其实是想要我自己说出来程序计数器、虚拟机栈等的作用。。。）"><a href="#介绍一下JVM的内存区域（面试官其实是想要我自己说出来程序计数器、虚拟机栈等的作用。。。）" class="headerlink" title="介绍一下JVM的内存区域（面试官其实是想要我自己说出来程序计数器、虚拟机栈等的作用。。。）"></a>介绍一下JVM的内存区域（面试官其实是想要我自己说出来程序计数器、虚拟机栈等的作用。。。）</h2><h2 id="程序计数器的作用"><a href="#程序计数器的作用" class="headerlink" title="程序计数器的作用"></a>程序计数器的作用</h2><h2 id="介绍一下垃圾回收算法"><a href="#介绍一下垃圾回收算法" class="headerlink" title="介绍一下垃圾回收算法"></a>介绍一下垃圾回收算法</h2><h2 id="MySQL的常用引擎"><a href="#MySQL的常用引擎" class="headerlink" title="MySQL的常用引擎?"></a>MySQL的常用引擎?</h2><h2 id="MySQL如何实现MVCC的原理？（从ReadView角度回答）"><a href="#MySQL如何实现MVCC的原理？（从ReadView角度回答）" class="headerlink" title="MySQL如何实现MVCC的原理？（从ReadView角度回答）"></a>MySQL如何实现MVCC的原理？（从ReadView角度回答）</h2><h2 id="多线程的应用场景"><a href="#多线程的应用场景" class="headerlink" title="多线程的应用场景"></a>多线程的应用场景</h2><h2 id="如何创建线程池？为什么要使用线程池？"><a href="#如何创建线程池？为什么要使用线程池？" class="headerlink" title="如何创建线程池？为什么要使用线程池？"></a>如何创建线程池？为什么要使用线程池？</h2><h2 id="如何解决线程安全问题？"><a href="#如何解决线程安全问题？" class="headerlink" title="如何解决线程安全问题？"></a>如何解决线程安全问题？</h2><h2 id="了解自旋锁、乐观锁、悲观锁吗？（自旋锁不会。。。）"><a href="#了解自旋锁、乐观锁、悲观锁吗？（自旋锁不会。。。）" class="headerlink" title="了解自旋锁、乐观锁、悲观锁吗？（自旋锁不会。。。）"></a>了解自旋锁、乐观锁、悲观锁吗？（自旋锁不会。。。）</h2><h2 id="SpringBoot的常用注解"><a href="#SpringBoot的常用注解" class="headerlink" title="SpringBoot的常用注解"></a>SpringBoot的常用注解</h2><p>总结一下：</p>
+<p>1、依赖注入：@Autowired(<code>Autowired</code> 可以通过 <code>@Qualifier</code> 注解来显式指定名称)、@Resource、@Inject</p>
+<p>2、组件声明：@Component、@Bean、@Configuration、@Repository、@Service、@Controller</p>
+<p>3、其他：@ComponentScan、@Value</p>
+<p>以及其他等等。。。。</p>
+<h2 id="Component和-Bean注解的区别？"><a href="#Component和-Bean注解的区别？" class="headerlink" title="@Component和@Bean注解的区别？"></a>@Component和@Bean注解的区别？</h2><h2 id="Spring的设计模式有哪些？"><a href="#Spring的设计模式有哪些？" class="headerlink" title="Spring的设计模式有哪些？"></a>Spring的设计模式有哪些？</h2><h2 id="怎么部署Java服务？"><a href="#怎么部署Java服务？" class="headerlink" title="怎么部署Java服务？"></a>怎么部署Java服务？</h2><h2 id="查看cpu、进程、内存命令"><a href="#查看cpu、进程、内存命令" class="headerlink" title="查看cpu、进程、内存命令"></a>查看cpu、进程、内存命令</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">xiaoba</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://xiaobazeo.github.io/2023/07/12/%E9%9D%A2%E7%BB%8F-%E6%98%9F%E7%8E%AF%E7%A7%91%E6%8A%80Java%E5%AE%9E%E4%B9%A0-2023-6-12/">http://xiaobazeo.github.io/2023/07/12/%E9%9D%A2%E7%BB%8F-%E6%98%9F%E7%8E%AF%E7%A7%91%E6%8A%80Java%E5%AE%9E%E4%B9%A0-2023-6-12/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://xiaobazeo.github.io" target="_blank">HUT菜鸟小八的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%A2%E7%BB%8F/">面经</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_email"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/23/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E4%BA%8C%E6%89%8B%E5%B8%82%E5%9C%BA%E5%BC%80%E5%8F%91%E6%80%9D%E8%B7%AF/"><img class="prev-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">微布开发-二手市场开发思路(小程序+Java后端)</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/24/DataStructure-AVLTree/"><img class="next-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230822094007677.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">DataStructure-AVLTree</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/08/02/%E9%9D%A2%E7%BB%8F-%E4%B8%83%E7%89%9B%E4%BA%91%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E4%BA%8C%E9%9D%A2/" title="面经-七牛云测试开发实习一二面"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-02</div><div class="title">面经-七牛云测试开发实习一二面</div></div></a></div><div><a href="/2023/07/25/%E9%9D%A2%E7%BB%8F-%E4%B8%87%E7%89%A9%E5%BF%83%E9%80%89php%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0/" title="面经-万物心选php开发实习"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-25</div><div class="title">面经-万物心选php开发实习</div></div></a></div><div><a href="/2023/08/10/%E9%9D%A2%E7%BB%8F-%E5%80%9F%E9%92%B1%E5%8C%85%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0Java%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0/" title="面经-借钱包交易平台Java开发实习"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-10</div><div class="title">面经-借钱包交易平台Java开发实习</div></div></a></div><div><a href="/2023/05/01/%E9%9D%A2%E7%BB%8F-%E5%B7%B4%E6%AF%94%E7%89%B9%E4%B8%80%E9%9D%A2/" title="面经-巴比特一面"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-01</div><div class="title">面经-巴比特一面</div></div></a></div><div><a href="/2023/08/03/%E9%9D%A2%E7%BB%8F-%E5%8C%97%E6%A3%AE%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/" title="面经-北森后端开发实习一面(线程安全和锁未完成)"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">面经-北森后端开发实习一面(线程安全和锁未完成)</div></div></a></div><div><a href="/2023/07/23/%E9%9D%A2%E7%BB%8F-%E5%BF%AB%E6%89%8B%E6%B5%8B%E5%BC%80%E5%AE%9E%E4%B9%A0/" title="面经-快手测开 2023 - 7 - 11"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-23</div><div class="title">面经-快手测开 2023 - 7 - 11</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xiaoba</div><div class="author-info__description">更多请关注微信公众号“小八的编程之路”，那上面会实时更新一些知识经验分享~</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xiaobazeo"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobazeo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:166918502@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">QQ:166918502,有事请注明来意</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E9%AB%98QPS%E6%98%AF%E6%89%BF%E5%8F%97%E5%A4%9A%E5%B0%91%EF%BC%9F%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E4%BD%8D%E7%BD%AE%EF%BC%9F%E7%9B%AE%E5%89%8D%E6%98%AF%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">最高QPS是承受多少？服务器部署位置？目前是单体应用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%EF%BC%9F%EF%BC%88%E5%88%86%E5%B8%83%E5%BC%8Fid%E3%80%81%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E7%BB%84%E6%88%90%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">为什么要使用雪花算法？（分布式id、雪花算法组成）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E6%97%A0%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E7%9A%84%E5%8A%9F%E8%83%BD%EF%BC%9F%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">有无发布订阅的功能？应用场景有哪些？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%98%AF%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">Redis的应用场景是哪些？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%EF%BC%9F%E6%80%8E%E4%B9%88%E9%98%B2%E6%AD%A2%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">什么情况下会出现缓存雪崩？怎么防止缓存雪崩的问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8Credis%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">6.</span> <span class="toc-text">怎么保证数据库和redis的一致性问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E7%94%A8%E6%88%B7%E7%A6%81%E8%A8%80%E6%97%B6%E9%97%B4%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">怎么解决用户禁言时间失效的问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BJava%E9%9B%86%E5%90%88"><span class="toc-number">8.</span> <span class="toc-text">介绍一下Java集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArrayList%E6%98%AF%E5%9F%BA%E4%BA%8E%E4%BB%80%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F-%E4%BB%8EArrayList%E5%92%8CArray%E7%9A%84%E5%8C%BA%E5%88%AB%E5%87%BA%E5%8F%91%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">ArrayList是基于什么实现的？(从ArrayList和Array的区别出发）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArrayList%E7%9A%84%E6%80%8E%E4%B9%88%E5%8A%A8%E6%80%81%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F"><span class="toc-number">10.</span> <span class="toc-text">ArrayList的怎么动态扩容的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BJVM%E7%9A%84%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%EF%BC%88%E9%9D%A2%E8%AF%95%E5%AE%98%E5%85%B6%E5%AE%9E%E6%98%AF%E6%83%B3%E8%A6%81%E6%88%91%E8%87%AA%E5%B7%B1%E8%AF%B4%E5%87%BA%E6%9D%A5%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%E3%80%81%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%E7%AD%89%E7%9A%84%E4%BD%9C%E7%94%A8%E3%80%82%E3%80%82%E3%80%82%EF%BC%89"><span class="toc-number">11.</span> <span class="toc-text">介绍一下JVM的内存区域（面试官其实是想要我自己说出来程序计数器、虚拟机栈等的作用。。。）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">12.</span> <span class="toc-text">程序计数器的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95"><span class="toc-number">13.</span> <span class="toc-text">介绍一下垃圾回收算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL%E7%9A%84%E5%B8%B8%E7%94%A8%E5%BC%95%E6%93%8E"><span class="toc-number">14.</span> <span class="toc-text">MySQL的常用引擎?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0MVCC%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F%EF%BC%88%E4%BB%8EReadView%E8%A7%92%E5%BA%A6%E5%9B%9E%E7%AD%94%EF%BC%89"><span class="toc-number">15.</span> <span class="toc-text">MySQL如何实现MVCC的原理？（从ReadView角度回答）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">16.</span> <span class="toc-text">多线程的应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E6%B1%A0%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%EF%BC%9F"><span class="toc-number">17.</span> <span class="toc-text">如何创建线程池？为什么要使用线程池？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">18.</span> <span class="toc-text">如何解决线程安全问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E8%87%AA%E6%97%8B%E9%94%81%E3%80%81%E4%B9%90%E8%A7%82%E9%94%81%E3%80%81%E6%82%B2%E8%A7%82%E9%94%81%E5%90%97%EF%BC%9F%EF%BC%88%E8%87%AA%E6%97%8B%E9%94%81%E4%B8%8D%E4%BC%9A%E3%80%82%E3%80%82%E3%80%82%EF%BC%89"><span class="toc-number">19.</span> <span class="toc-text">了解自旋锁、乐观锁、悲观锁吗？（自旋锁不会。。。）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBoot%E7%9A%84%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3"><span class="toc-number">20.</span> <span class="toc-text">SpringBoot的常用注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Component%E5%92%8C-Bean%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">21.</span> <span class="toc-text">@Component和@Bean注解的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">22.</span> <span class="toc-text">Spring的设计模式有哪些？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%83%A8%E7%BD%B2Java%E6%9C%8D%E5%8A%A1%EF%BC%9F"><span class="toc-number">23.</span> <span class="toc-text">怎么部署Java服务？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bcpu%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E5%86%85%E5%AD%98%E5%91%BD%E4%BB%A4"><span class="toc-number">24.</span> <span class="toc-text">查看cpu、进程、内存命令</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/mhy-test01/" title="mhy-test01"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mhy-test01"/></a><div class="content"><a class="title" href="/2024/03/10/mhy-test01/" title="mhy-test01">mhy-test01</a><time datetime="2024-03-10T14:20:16.000Z" title="发表于 2024-03-10 22:20:16">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/Java-Deque/" title="Java-Deque"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java-Deque"/></a><div class="content"><a class="title" href="/2024/03/10/Java-Deque/" title="Java-Deque">Java-Deque</a><time datetime="2024-03-10T02:44:02.000Z" title="发表于 2024-03-10 10:44:02">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryTwo"/></a><div class="content"><a class="title" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo">MySQL-summaryTwo</a><time datetime="2023-12-19T05:22:53.000Z" title="发表于 2023-12-19 13:22:53">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryOne"/></a><div class="content"><a class="title" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne">MySQL-summaryOne</a><time datetime="2023-12-18T07:57:36.000Z" title="发表于 2023-12-18 15:57:36">2023-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="web-coursePushErrorSolution"/></a><div class="content"><a class="title" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution">web-coursePushErrorSolution</a><time datetime="2023-12-12T06:38:43.000Z" title="发表于 2023-12-12 14:38:43">2023-12-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By xiaoba</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,  welcome  to  my  <a  target="_blank" rel="noopener" href="https://xiaobazeo.com/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'L4hC6khKXGdHXK53aAweTwbM-gzGzoHsz',
+      appKey: 'x6SUHaNHjueSamLFU7ua9UnE',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

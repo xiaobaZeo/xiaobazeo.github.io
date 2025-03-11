@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>微布开发-上传多张图片控制上传顺序 | HUT菜鸟小八的博客</title><meta name="keywords" content="微布开发总结"><meta name="author" content="xiaoba"><meta name="copyright" content="xiaoba"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开发思路：串行上传：在前端逐个上传图片，并等待上一个图片上传成功后再上传下一个图片，以保持上传顺序。  刚开始开发是通过一个for循环依次上传，没有考虑到可能因为图片大小、网络等原因导致后端返回的url顺序不一致，可以理解成多并发上传的时候而导致的顺序问题  代码大致实现：123456789101112131415161718192021222324252627282930313233343536">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微布开发-上传多张图片控制上传顺序">
+<meta property="og:url" content="http://xiaobazeo.github.io/2023/08/04/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E4%B8%8A%E4%BC%A0%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87%E6%8E%A7%E5%88%B6%E4%B8%8A%E4%BC%A0%E9%A1%BA%E5%BA%8F/index.html">
+<meta property="og:site_name" content="HUT菜鸟小八的博客">
+<meta property="og:description" content="开发思路：串行上传：在前端逐个上传图片，并等待上一个图片上传成功后再上传下一个图片，以保持上传顺序。  刚开始开发是通过一个for循环依次上传，没有考虑到可能因为图片大小、网络等原因导致后端返回的url顺序不一致，可以理解成多并发上传的时候而导致的顺序问题  代码大致实现：123456789101112131415161718192021222324252627282930313233343536">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png">
+<meta property="article:published_time" content="2023-08-04T07:58:14.000Z">
+<meta property="article:modified_time" content="2025-03-11T14:37:47.926Z">
+<meta property="article:author" content="xiaoba">
+<meta property="article:tag" content="微布开发总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png"><link rel="shortcut icon" href="/img/touxiang3.jpg"><link rel="canonical" href="http://xiaobazeo.github.io/2023/08/04/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E4%B8%8A%E4%BC%A0%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87%E6%8E%A7%E5%88%B6%E4%B8%8A%E4%BC%A0%E9%A1%BA%E5%BA%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '微布开发-上传多张图片控制上传顺序',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-11 22:37:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="HUT菜鸟小八的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">HUT菜鸟小八的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">微布开发-上传多张图片控制上传顺序</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-04T07:58:14.000Z" title="发表于 2023-08-04 15:58:14">2023-08-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-11T14:37:47.926Z" title="更新于 2025-03-11 22:37:47">2025-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">527</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="微布开发-上传多张图片控制上传顺序"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="开发思路："><a href="#开发思路：" class="headerlink" title="开发思路："></a>开发思路：</h3><p>串行上传：在前端逐个上传图片，并等待上一个图片上传成功后再上传下一个图片，以保持上传顺序。</p>
+<blockquote>
+<p>刚开始开发是通过一个for循环依次上传，没有考虑到可能因为图片大小、网络等原因导致后端返回的url顺序不一致，可以理解成多并发上传的时候而导致的顺序问题</p>
+</blockquote>
+<h3 id="代码大致实现："><a href="#代码大致实现：" class="headerlink" title="代码大致实现："></a>代码大致实现：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">uploadAllPics</span>(<span class="params">selectedImages, index</span>) &#123;</span><br><span class="line"><span class="comment">//fileListPicStorage 和fileList 都是用于展示组件的时候用的，主要就是存储上传之后的图片url</span></span><br><span class="line">  <span class="keyword">const</span> &#123; fileListPicStorage = [] &#125; = <span class="variable language_">this</span>.<span class="property">data</span></span><br><span class="line">  <span class="keyword">const</span> &#123; fileList = [] &#125; = <span class="variable language_">this</span>.<span class="property">data</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (index &gt;= selectedImages.<span class="property">length</span>) &#123;</span><br><span class="line">      <span class="comment">// 所有图片上传完成</span></span><br><span class="line">      <span class="title function_">resolve</span>()</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(selectedImages)</span><br><span class="line">    <span class="keyword">const</span> image = selectedImages[index]</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(image)</span><br><span class="line">    wx.<span class="title function_">uploadFile</span>(&#123;</span><br><span class="line">      <span class="attr">url</span>: app.<span class="property">globalData</span>.<span class="property">url</span> + app.<span class="property">globalData</span>.<span class="property">apiVersion</span> + <span class="string">&#x27;/upload&#x27;</span>, <span class="comment">// 替换成后端上传接口的URL</span></span><br><span class="line">      <span class="attr">filePath</span>: image.<span class="property">url</span>, <span class="comment">// 图片文件的本地路径</span></span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;file&#x27;</span>, <span class="comment">// 后端接收图片的字段名</span></span><br><span class="line">      <span class="attr">header</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;multipart/form-data&#x27;</span>,</span><br><span class="line">        <span class="attr">token</span>: wx.<span class="title function_">getStorageSync</span>(<span class="string">&#x27;token&#x27;</span>),</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">success</span>: <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 图片上传成功后的处理</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;图片上传成功&#x27;</span>, res)</span><br><span class="line">        <span class="keyword">let</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(res.<span class="property">data</span>)</span><br><span class="line">        fileList.<span class="title function_">push</span>(data.<span class="property">data</span>.<span class="property">result</span>)</span><br><span class="line">        fileListPicStorage.<span class="title function_">push</span>(&#123;</span><br><span class="line">          <span class="attr">url</span>:</span><br><span class="line">            <span class="string">&#x27;******&#x27;</span> +<span class="comment">//****代表图片url的前半部分，因为后端返回的都是后半部分url，需要前端自己补上前半部分的url</span></span><br><span class="line">            data.<span class="property">data</span>.<span class="property">result</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123; fileList, fileListPicStorage &#125;)</span><br><span class="line">        <span class="comment">// 继续上传下一张图片</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">uploadAllPics</span>(selectedImages, index + <span class="number">1</span>)</span><br><span class="line">          .<span class="title function_">then</span>(resolve)</span><br><span class="line">          .<span class="title function_">catch</span>(reject)</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">fail</span>: <span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 处理上传失败情况</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;图片上传失败&#x27;</span>, error)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 继续上传下一张图片</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">uploadAllPics</span>(selectedImages, index + <span class="number">1</span>)</span><br><span class="line">          .<span class="title function_">then</span>(resolve)</span><br><span class="line">          .<span class="title function_">catch</span>(reject)</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">//选择照片就上传9张照片</span></span><br><span class="line"><span class="keyword">async</span> <span class="title function_">afterRead</span>(<span class="params">event</span>) &#123;</span><br><span class="line">  app.<span class="title function_">showLoading</span>(<span class="string">&#x27;图片上传中&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> that = <span class="variable language_">this</span></span><br><span class="line">  <span class="comment">//获取照片本地位置的文件数组</span></span><br><span class="line">  <span class="comment">//console.log(event)</span></span><br><span class="line">  <span class="keyword">const</span> &#123; file &#125; = event.<span class="property">detail</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(file)</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//选择完并点击确认之后开始上传图片</span></span><br><span class="line">    <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="title function_">uploadAllPics</span>(file, <span class="number">0</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;所有图片上传完成&#x27;</span>)</span><br><span class="line">    wx.<span class="title function_">hideLoading</span>()</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;图片上传失败&#x27;</span>, error)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">xiaoba</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://xiaobazeo.github.io/2023/08/04/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E4%B8%8A%E4%BC%A0%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87%E6%8E%A7%E5%88%B6%E4%B8%8A%E4%BC%A0%E9%A1%BA%E5%BA%8F/">http://xiaobazeo.github.io/2023/08/04/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E4%B8%8A%E4%BC%A0%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87%E6%8E%A7%E5%88%B6%E4%B8%8A%E4%BC%A0%E9%A1%BA%E5%BA%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://xiaobazeo.github.io" target="_blank">HUT菜鸟小八的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/">微布开发总结</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_email"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/07/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E5%B0%86%E8%AF%B4%E8%AF%B4%E8%AE%B0%E5%BD%95%E7%9A%84%E5%9B%BE%E7%89%87url%E5%8D%95%E7%8B%AC%E6%8F%90%E5%87%BA%E6%9D%A5%E7%94%A8%E4%B8%80%E4%B8%AA%E8%A1%A8%E5%AD%98%E5%82%A8/"><img class="prev-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">微布开发-将说说记录的图片url单独提出来用一个表存储的设计</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/03/%E9%9D%A2%E7%BB%8F-%E5%8C%97%E6%A3%AE%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/"><img class="next-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">面经-北森后端开发实习一面(线程安全和锁未完成)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/10/09/web-check-out-server-broken-down/" title="微布开发-服务器排查"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-09</div><div class="title">微布开发-服务器排查</div></div></a></div><div><a href="/2023/10/10/web-clearServerStorage/" title="微布开发-清理服务器日志(*.log结尾的文件)及MySQL存储的日志"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-10</div><div class="title">微布开发-清理服务器日志(*.log结尾的文件)及MySQL存储的日志</div></div></a></div><div><a href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-12</div><div class="title">web-coursePushErrorSolution</div></div></a></div><div><a href="/2023/10/26/web-slowSQLSearchOptimize/" title="web-slowSQLSearchOptimize"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-26</div><div class="title">web-slowSQLSearchOptimize</div></div></a></div><div><a href="/2023/10/11/web-sqlBackup/" title="微布开发-数据库备份"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-11</div><div class="title">微布开发-数据库备份</div></div></a></div><div><a href="/2023/10/26/web-timetableServerDown/" title="web-timetableServerDown"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-26</div><div class="title">web-timetableServerDown</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xiaoba</div><div class="author-info__description">更多请关注微信公众号“小八的编程之路”，那上面会实时更新一些知识经验分享~</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xiaobazeo"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobazeo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:166918502@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">QQ:166918502,有事请注明来意</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">开发思路：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A4%A7%E8%87%B4%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">代码大致实现：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/mhy-test01/" title="mhy-test01"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mhy-test01"/></a><div class="content"><a class="title" href="/2024/03/10/mhy-test01/" title="mhy-test01">mhy-test01</a><time datetime="2024-03-10T14:20:16.000Z" title="发表于 2024-03-10 22:20:16">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/Java-Deque/" title="Java-Deque"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java-Deque"/></a><div class="content"><a class="title" href="/2024/03/10/Java-Deque/" title="Java-Deque">Java-Deque</a><time datetime="2024-03-10T02:44:02.000Z" title="发表于 2024-03-10 10:44:02">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryTwo"/></a><div class="content"><a class="title" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo">MySQL-summaryTwo</a><time datetime="2023-12-19T05:22:53.000Z" title="发表于 2023-12-19 13:22:53">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryOne"/></a><div class="content"><a class="title" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne">MySQL-summaryOne</a><time datetime="2023-12-18T07:57:36.000Z" title="发表于 2023-12-18 15:57:36">2023-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="web-coursePushErrorSolution"/></a><div class="content"><a class="title" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution">web-coursePushErrorSolution</a><time datetime="2023-12-12T06:38:43.000Z" title="发表于 2023-12-12 14:38:43">2023-12-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By xiaoba</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,  welcome  to  my  <a  target="_blank" rel="noopener" href="https://xiaobazeo.com/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'L4hC6khKXGdHXK53aAweTwbM-gzGzoHsz',
+      appKey: 'x6SUHaNHjueSamLFU7ua9UnE',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>微布开发-实现说说审核发布机制(暂未完成) | HUT菜鸟小八的博客</title><meta name="keywords" content="微布开发总结"><meta name="author" content="xiaoba"><meta name="copyright" content="xiaoba"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="业务场景：调用微信三方接口进行图片&#x2F;视频安全校验，由于微信的视频&#x2F;图片校验结果是异步返回到服务端的接口，所以需要将附有照片或者视频的说说审核通过之后再将说说发布到论坛中。 问题分析：1、如何标识所有图片&#x2F;视频审核完成之后再发布呢？ 因为每次向微信的接口发送请求的时候，会对每张照片的审核都会有一个任务id(trace_id)，根据这个traceid映射对应的is_valid（标识是否校验通过）和ta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微布开发-实现说说审核发布机制(暂未完成)">
+<meta property="og:url" content="http://xiaobazeo.github.io/2023/08/09/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E5%AE%9E%E7%8E%B0%E8%AF%B4%E8%AF%B4%E5%AE%A1%E6%A0%B8%E5%8F%91%E5%B8%83%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="HUT菜鸟小八的博客">
+<meta property="og:description" content="业务场景：调用微信三方接口进行图片&#x2F;视频安全校验，由于微信的视频&#x2F;图片校验结果是异步返回到服务端的接口，所以需要将附有照片或者视频的说说审核通过之后再将说说发布到论坛中。 问题分析：1、如何标识所有图片&#x2F;视频审核完成之后再发布呢？ 因为每次向微信的接口发送请求的时候，会对每张照片的审核都会有一个任务id(trace_id)，根据这个traceid映射对应的is_valid（标识是否校验通过）和ta">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png">
+<meta property="article:published_time" content="2023-08-09T08:04:28.000Z">
+<meta property="article:modified_time" content="2025-03-11T14:37:48.078Z">
+<meta property="article:author" content="xiaoba">
+<meta property="article:tag" content="微布开发总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png"><link rel="shortcut icon" href="/img/touxiang3.jpg"><link rel="canonical" href="http://xiaobazeo.github.io/2023/08/09/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E5%AE%9E%E7%8E%B0%E8%AF%B4%E8%AF%B4%E5%AE%A1%E6%A0%B8%E5%8F%91%E5%B8%83%E6%9C%BA%E5%88%B6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '微布开发-实现说说审核发布机制(暂未完成)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-11 22:37:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="HUT菜鸟小八的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">HUT菜鸟小八的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">微布开发-实现说说审核发布机制(暂未完成)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-09T08:04:28.000Z" title="发表于 2023-08-09 16:04:28">2023-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-11T14:37:48.078Z" title="更新于 2025-03-11 22:37:48">2025-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">772</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="微布开发-实现说说审核发布机制(暂未完成)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="业务场景："><a href="#业务场景：" class="headerlink" title="业务场景："></a>业务场景：</h3><p>调用微信三方接口进行图片/视频安全校验，由于微信的视频/图片校验结果是异步返回到服务端的接口，所以需要将附有照片或者视频的说说审核通过之后再将说说发布到论坛中。</p>
+<h3 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h3><p>1、如何标识所有图片/视频审核完成之后再发布呢？</p>
+<p>因为每次向微信的接口发送请求的时候，会对每张照片的审核都会有一个任务id(trace_id)，根据这个traceid映射对应的is_valid（标识是否校验通过）和talkbid（说说的主键id）字段来标识</p>
+<ol>
+<li>单独拉一张表出来存储图片url和trace_id的关系，然后用一个is_valid字段根据微信接口异步返回的结果标识判断是否校验通过，如果校验通过is_valid就变成1，还在校验过程中或者校验未通过就标识0。</li>
+<li>使用Redis通过设置超时时间来使标识自动淘汰，释放内存空间</li>
+<li>在说说表添加一个trace_id字段，存储每张照片的trace_id，并用逗号分隔开，每次微信异步返回结果之后如果审核通过就把trace_id和返回过来的trace_id部分删除，否则就不删除，同时判断此时trace_id字段是否为空，如果等于空值了，那么就说明全部校验通过了、然后将说说详情中的is_delete(说说软删标识)字段设为0，展示到社区论坛中。</li>
+</ol>
+<p>3、以上标识方法会有什么问题呢？为什么最终选用对说说详情表添加字段的方式进行标识呢？</p>
+<p>第一种方法，需要单独创建一个表，会占用一定的磁盘空间，以及MySQL需要花费更大的空间进行维护造成一定的资源浪费。</p>
+<p>第二种方法，Redis是基于内存的一种缓存数据库，如果当有大量的io操作的时候，就会占用内存空间，这个时候很可能会出现Redis崩盘的情况，甚至说Redis宕机，因为微布校园现在是单体架构，暂时无解，只能放弃这个想法了。</p>
+<p>第三种方法，毕竟只是添加一个字段，MySQL的维护成本相对第一种就比较低了，对于第二种方案，数据的读取，MySQL 通常会使用缓冲池（Buffer Pool）来管理数据在内存中的存储。数据会根据需要从磁盘加载到缓冲池中，并且在查询时尽量从缓冲池中读取数据，从而避免频繁的磁盘 I/O 操作。如果数据在缓冲池中已经存在，查询时可以直接从内存中读取，这比从磁盘读取要快得多。反正在读取的时候，要用缓冲池的机制将数据放到内存中，再从缓冲池中读取数据，这样相对单独用Redis去维护标识会好很多。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">xiaoba</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://xiaobazeo.github.io/2023/08/09/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E5%AE%9E%E7%8E%B0%E8%AF%B4%E8%AF%B4%E5%AE%A1%E6%A0%B8%E5%8F%91%E5%B8%83%E6%9C%BA%E5%88%B6/">http://xiaobazeo.github.io/2023/08/09/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E5%AE%9E%E7%8E%B0%E8%AF%B4%E8%AF%B4%E5%AE%A1%E6%A0%B8%E5%8F%91%E5%B8%83%E6%9C%BA%E5%88%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://xiaobazeo.github.io" target="_blank">HUT菜鸟小八的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/">微布开发总结</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_email"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/10/%E9%9D%A2%E7%BB%8F-%E5%80%9F%E9%92%B1%E5%8C%85%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0Java%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0/"><img class="prev-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">面经-借钱包交易平台Java开发实习</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/09/%E5%BE%AE%E5%B8%83%E5%BC%80%E5%8F%91-%E4%BC%98%E5%8C%96UGC%E6%B6%88%E6%81%AF%E6%8B%89%E5%8F%96%E5%93%8D%E5%BA%94%E9%80%9F%E5%BA%A6/"><img class="next-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">微布开发-优化UGC消息拉取响应速度</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/10/09/web-check-out-server-broken-down/" title="微布开发-服务器排查"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-09</div><div class="title">微布开发-服务器排查</div></div></a></div><div><a href="/2023/10/10/web-clearServerStorage/" title="微布开发-清理服务器日志(*.log结尾的文件)及MySQL存储的日志"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-10</div><div class="title">微布开发-清理服务器日志(*.log结尾的文件)及MySQL存储的日志</div></div></a></div><div><a href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-12</div><div class="title">web-coursePushErrorSolution</div></div></a></div><div><a href="/2023/10/26/web-slowSQLSearchOptimize/" title="web-slowSQLSearchOptimize"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-26</div><div class="title">web-slowSQLSearchOptimize</div></div></a></div><div><a href="/2023/10/11/web-sqlBackup/" title="微布开发-数据库备份"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-11</div><div class="title">微布开发-数据库备份</div></div></a></div><div><a href="/2023/10/26/web-timetableServerDown/" title="web-timetableServerDown"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-26</div><div class="title">web-timetableServerDown</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xiaoba</div><div class="author-info__description">更多请关注微信公众号“小八的编程之路”，那上面会实时更新一些知识经验分享~</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xiaobazeo"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobazeo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:166918502@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">QQ:166918502,有事请注明来意</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">业务场景：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">问题分析：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/mhy-test01/" title="mhy-test01"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mhy-test01"/></a><div class="content"><a class="title" href="/2024/03/10/mhy-test01/" title="mhy-test01">mhy-test01</a><time datetime="2024-03-10T14:20:16.000Z" title="发表于 2024-03-10 22:20:16">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/Java-Deque/" title="Java-Deque"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java-Deque"/></a><div class="content"><a class="title" href="/2024/03/10/Java-Deque/" title="Java-Deque">Java-Deque</a><time datetime="2024-03-10T02:44:02.000Z" title="发表于 2024-03-10 10:44:02">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryTwo"/></a><div class="content"><a class="title" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo">MySQL-summaryTwo</a><time datetime="2023-12-19T05:22:53.000Z" title="发表于 2023-12-19 13:22:53">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryOne"/></a><div class="content"><a class="title" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne">MySQL-summaryOne</a><time datetime="2023-12-18T07:57:36.000Z" title="发表于 2023-12-18 15:57:36">2023-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="web-coursePushErrorSolution"/></a><div class="content"><a class="title" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution">web-coursePushErrorSolution</a><time datetime="2023-12-12T06:38:43.000Z" title="发表于 2023-12-12 14:38:43">2023-12-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By xiaoba</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,  welcome  to  my  <a  target="_blank" rel="noopener" href="https://xiaobazeo.com/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'L4hC6khKXGdHXK53aAweTwbM-gzGzoHsz',
+      appKey: 'x6SUHaNHjueSamLFU7ua9UnE',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

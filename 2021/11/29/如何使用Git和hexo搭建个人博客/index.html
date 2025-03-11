@@ -1,0 +1,374 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>自学如何使用Git+Hexo搭建个人博客 | HUT菜鸟小八的博客</title><meta name="keywords" content="Git+Hexo"><meta name="author" content="xiaoba"><meta name="copyright" content="xiaoba"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、前言&amp;ensp; &amp;ensp;Hello,我们又见面了，不好意思，各位小伙伴，今天身边出了点状况，本来上午就想着更新的，但是下午发生了一件很让人不爽的事情，就耽误了分享学习心得的方法与步骤，好了，言归正传，不知道你们看了上一篇关于“Git从0到基本运用”的文章，有没有学会Git的使用呢？ &amp;ensp; &amp;ensp;要是还没有学会呢，那还得加油啊，学会了的话，那我们现在就进入正题吧，我们既然学会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自学如何使用Git+Hexo搭建个人博客">
+<meta property="og:url" content="http://xiaobazeo.github.io/2021/11/29/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Git%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:site_name" content="HUT菜鸟小八的博客">
+<meta property="og:description" content="一、前言&amp;ensp; &amp;ensp;Hello,我们又见面了，不好意思，各位小伙伴，今天身边出了点状况，本来上午就想着更新的，但是下午发生了一件很让人不爽的事情，就耽误了分享学习心得的方法与步骤，好了，言归正传，不知道你们看了上一篇关于“Git从0到基本运用”的文章，有没有学会Git的使用呢？ &amp;ensp; &amp;ensp;要是还没有学会呢，那还得加油啊，学会了的话，那我们现在就进入正题吧，我们既然学会">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/git和hexo搭建个人博客/%E5%8D%9A%E5%AE%A2%E5%B0%81%E9%9D%A2.png?versionId=CAEQGBiBgID7ru7F7hciIDEzZTA0MGU2MGFlZTRhYTk5NmU0YWYwNmY3NzUwYWNl">
+<meta property="article:published_time" content="2021-11-29T00:05:36.000Z">
+<meta property="article:modified_time" content="2025-03-11T14:37:48.132Z">
+<meta property="article:author" content="xiaoba">
+<meta property="article:tag" content="Git+Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/git和hexo搭建个人博客/%E5%8D%9A%E5%AE%A2%E5%B0%81%E9%9D%A2.png?versionId=CAEQGBiBgID7ru7F7hciIDEzZTA0MGU2MGFlZTRhYTk5NmU0YWYwNmY3NzUwYWNl"><link rel="shortcut icon" href="/img/touxiang3.jpg"><link rel="canonical" href="http://xiaobazeo.github.io/2021/11/29/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Git%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '自学如何使用Git+Hexo搭建个人博客',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-11 22:37:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="HUT菜鸟小八的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/git和hexo搭建个人博客/%E5%8D%9A%E5%AE%A2%E5%B0%81%E9%9D%A2.png?versionId=CAEQGBiBgID7ru7F7hciIDEzZTA0MGU2MGFlZTRhYTk5NmU0YWYwNmY3NzUwYWNl')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">HUT菜鸟小八的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">自学如何使用Git+Hexo搭建个人博客</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-29T00:05:36.000Z" title="发表于 2021-11-29 08:05:36">2021-11-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-11T14:37:48.132Z" title="更新于 2025-03-11 22:37:48">2025-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="自学如何使用Git+Hexo搭建个人博客"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>&ensp; &ensp;Hello,我们又见面了，不好意思，各位小伙伴，今天身边出了点状况，本来上午就想着更新的，但是下午发生了一件很让人不爽的事情，就耽误了分享学习心得的方法与步骤，好了，言归正传，不知道你们看了上一篇关于“Git从0到基本运用”的文章，有没有学会Git的使用呢？</p>
+<p>&ensp; &ensp;要是还没有学会呢，那还得加油啊，学会了的话，那我们现在就进入正题吧，我们既然学会了这个Git，那我们就来学习一下如何通过Git和Hexo搭建一个属于自己的个人博客吧</p>
+<span id="more"></span>
+<h2 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h2><blockquote>
+<ul>
+<li>准备一个Github账号（在前面学习Git的时候应该就准备好了）</li>
+<li>安装node.js，npm，并了解相关知识</li>
+<li>安装Git for Windows（不同系统安装对应不同的版本）</li>
+</ul>
+</blockquote>
+<h2 id="三、应用简介："><a href="#三、应用简介：" class="headerlink" title="三、应用简介："></a>三、应用简介：</h2><h3 id="3-1Node-js"><a href="#3-1Node-js" class="headerlink" title="3.1Node.js:"></a>3.1Node.js:</h3><h4 id="ensp-ensp-3-1-1-由来及优势："><a href="#ensp-ensp-3-1-1-由来及优势：" class="headerlink" title="&ensp; &ensp;3.1.1 由来及优势："></a>&ensp; &ensp;3.1.1 由来及优势：</h4><p>&ensp; &ensp; Node.js发布于2009年5月，由Ryan Dahl开发，是一个基于Chrome V8引擎的JavaScript运行环境，使用了一个事件驱动、非阻塞式I/O模型，让JavaScript 运行在服务端的开发平台，它让JavaScript成为与PHP、Python、Perl、Ruby等服务端语言平起平坐的脚本语言。</p>
+<p>&ensp; &ensp; Node.js对一些特殊用例进行优化，提供替代的API，使得V8在非浏览器环境下运行得更好，V8引擎执行Javascript的速度非常快，性能非常好，基于Chrome JavaScript运行时建立的平台， 用于方便地搭建响应速度快、易于扩展的网络应用。</p>
+<h4 id="ensp-ensp-3-1-2-主要功能："><a href="#ensp-ensp-3-1-2-主要功能：" class="headerlink" title="&ensp; &ensp;3.1.2 主要功能："></a>&ensp; &ensp;3.1.2 主要功能：</h4><p>&ensp; &ensp; V8引擎本身使用了一些最新的编译技术。这使得用Javascript这类脚本语言编写出来的代码运行速度获得了极大提升，又节省了开发成本。对性能的苛求是Node的一个关键因素。 Javascript是一个事件驱动语言，Node利用了这个优点，编写出可扩展性高的服务器。Node采用了一个称为“事件循环(event loop）”的架构，使得编写可扩展性高的服务器变得既容易又安全。提高服务器性能的技巧有多种多样。Node选择了一种既能提高性能，又能减低开发复杂度的架构。这是一个非常重要的特性。并发编程通常很复杂且布满地雷。Node绕过了这些，但仍提供很好的性能。</p>
+<p>&ensp; &ensp; Node采用一系列“非阻塞”库来支持事件循环的方式。本质上就是为文件系统、数据库之类的资源提供接口。向文件系统发送一个请求时，无需等待硬盘（寻址并检索文件），硬盘准备好的时候非阻塞接口会通知Node。该模型以可扩展的方式简化了对慢资源的访问， 直观，易懂。尤其是对于熟悉onmouseover、onclick等DOM事件的用户，更有一种似曾相识的感觉。</p>
+<p>&ensp; &ensp; 虽然让Javascript运行于服务器端不是Node的独特之处，但却是其一强大功能。不得不承认，浏览器环境限制了我们选择编程语言的自由。任何服务器与日益复杂的浏览器客户端应用程序间共享代码的愿望只能通过Javascript来实现。虽然还存在其他一些支持Javascript在服务器端 运行的平台，但因为上述特性，Node发展迅猛，成为事实上的平台。</p>
+<p>&ensp; &ensp; 在Node启动的很短时间内，社区就已经贡献了大量的扩展库（模块）。其中很多是连接数据库或是其他软件的驱动，但还有很多是凭他们的实力制作出来的非常有用的软件。</p>
+<p>&ensp; &ensp; 最后，不得不提到的是Node社区。虽然Node项目还非常年轻，但很少看到对一个项目如此狂热的社区。不管是新手，还是专家，大家都围绕着项目，使用并贡献自己的能力，致力于打造一个探索、支持、分享、听取建议的乐土。</p>
+<h3 id="ensp-ensp-3-2-NPM："><a href="#ensp-ensp-3-2-NPM：" class="headerlink" title="&ensp; &ensp;3.2 NPM："></a>&ensp; &ensp;3.2 NPM：</h3><p>&ensp; &ensp;&ensp; &ensp; NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：</p>
+<blockquote>
+<p>允许用户从NPM服务器下载别人编写的第三方包到本地使用。</p>
+</blockquote>
+<blockquote>
+<p>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。</p>
+</blockquote>
+<blockquote>
+<p>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</p>
+</blockquote>
+<h3 id="ensp-ensp-3-3-其他应用："><a href="#ensp-ensp-3-3-其他应用：" class="headerlink" title="&ensp; &ensp;3.3 其他应用："></a>&ensp; &ensp;3.3 其他应用：</h3><p>&ensp; &ensp;&ensp; &ensp;Git的功能在前面的学习之后，大家也有所了解了，这里也就不多说了。</p>
+<h2 id="四、搭建github博客"><a href="#四、搭建github博客" class="headerlink" title="四、搭建github博客"></a>四、搭建github博客</h2><h3 id="4-1-创建仓库"><a href="#4-1-创建仓库" class="headerlink" title="4.1 创建仓库"></a>4.1 创建仓库</h3><p>&ensp; &ensp;登录Github网站新建一个名为<code>你的用户名.github.io</code>比如说，如果你的github用户名是pengzihao166，那么你就新建pengzihao166.github.io的仓库（必须是你的用户名，其它名称无效），将来你的网站访问地址就是 <code>http://pengzihao166.github.io</code> 了。</p>
+<p>&ensp; &ensp;由此可见，每一个github账户最多只能创建一个这样可以直接使用域名访问的仓库。</p>
+<p>注意：</p>
+<p>&ensp; &ensp;1、注册的邮箱一定要验证，否则不会成功；</p>
+<p>&ensp; &ensp;2、仓库名字必须是：<code>username.github.io</code>，其中<code>username</code>是你的github用户名。</p>
+<p>&ensp; &ensp;3、仓库创建成功一般不会立即生效，需要过一段时间，大概10-30分钟，或者更久，我等了十几分钟才生效。</p>
+<p>&ensp; &ensp;当时还以为我操作失败了，然后疯狂重新删库，建库，就这个步骤我活活弄了一小时左右，后来把那个挂后台，去打了一把LOL大乱斗，回来之后发现好了，就继续战斗搭建博客了。</p>
+<h3 id="4-2-绑定域名"><a href="#4-2-绑定域名" class="headerlink" title="4.2 绑定域名"></a>4.2 绑定域名</h3><p>&ensp; &ensp;这个有钱的，可以去买一个域名再去绑定，什么腾讯云，阿里云，godaddy都可以。</p>
+<p>&ensp; &ensp;当然，你不绑定域名肯定也是可以的，就用默认的 <code>xxx.github.io</code> 来访问，如果你想更个性一点，想拥有一个属于自己的域名，那就去买一个域名吧。</p>
+<h2 id="五、配置SSH-Key"><a href="#五、配置SSH-Key" class="headerlink" title="五、配置SSH Key"></a>五、配置SSH Key</h2><p>&ensp; &ensp;其实在你们学习git的时候就已经有了SSH Key的配置，这里我就再稍微讲一下怎么进行配置吧。</p>
+<blockquote>
+<p>$ cd ~/. ssh #检查本机已存在的ssh密钥</p>
+</blockquote>
+<p>如果提示：No such file or directory 说明你是第一次使用git。</p>
+<blockquote>
+<p>ssh-keygen -t rsa -C “邮件地址”</p>
+</blockquote>
+<p>&ensp; &ensp;然后连续3次回车，最终会生成一个文件在用户目录下，打开用户目录，找到<code>.ssh\id_rsa.pub</code>文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key,粘贴上去。</p>
+<p>注意：这里是个人设置界面，不是你的远程库的那个settings！！！截图如下：</p>
+<img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/git和hexo搭建个人博客/QQ%E5%9B%BE%E7%89%8720211205165600.png?versionId=CAEQFxiBgICVrqGn7BciIDQwNjM5ODE0YTJjNDQ1ODg4OGYxODc3YjgzMGYyNGE1">
+
+<img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/git和hexo搭建个人博客/QQ%E5%9B%BE%E7%89%8720211205170337.jpg?versionId=CAEQFxiBgICr4Kun7BciIDNiNTA4OTFkZmNiZjQwN2FiZWNhMzNiNTQ0MzJkNDQw">
+
+<h3 id="5-1-测试是否成功"><a href="#5-1-测试是否成功" class="headerlink" title="5.1 测试是否成功"></a>5.1 测试是否成功</h3><p>&ensp; &ensp;<code>$ ssh -T git@github.com </code># 注意邮箱地址不用改</p>
+<p>&ensp; &ensp;如果提示Are you sure you want to continue connecting (yes/no)?，输入yes</p>
+<p>&ensp; &ensp;然后会看到：</p>
+<p>&ensp; &ensp;&gt; Hi xxxxx! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+<p>&ensp; &ensp;看到这个信息说明SSH已配置成功！</p>
+<p>&ensp; &ensp;此时你还需要配置：</p>
+<p>&ensp; &ensp;<code>$ git config --global user.name &quot;xxxx&quot;</code></p>
+<p>&ensp; &ensp;// xxx是指你的github用户名，非昵称</p>
+<p>&ensp; &ensp;<code>$ git config --global user.email  &quot;xxx@qq.com&quot;</code></p>
+<p>&ensp; &ensp;// xxx是指填写你的github注册邮箱</p>
+<p>注意：这里验证结果展示图如下：</p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/assets/QQ%E5%9B%BE%E7%89%8720211204135329.png?versionId=CAEQFxiBgICPxYSQ7BciIGU4NjQzYWNkMzY3NTQxYjc5OTU0MTU3MzVjZDU1ZGUw"></p>
+<p>&ensp; &ensp;你没有看错，没错就是啥都不会显示，然后你就可以进行下面的操作了</p>
+<h2 id="六、使用hexo写博客"><a href="#六、使用hexo写博客" class="headerlink" title="六、使用hexo写博客"></a>六、使用hexo写博客</h2><h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><p>下面的注意事项，需要各位小伙伴认真看好了，并且记住了，不然对你以后写博客的改动有很大影响。</p>
+<ul>
+<li><p>前面的配置环境只要搭好了，其实后面也就不难了，但是！！！也是非常重要的一个内容，不然前面的全白搭了</p>
+</li>
+<li><p>很多命令既可以用Windows的cmd来完成，也可以使用git bash来完成，但是部分命令会有一些问题，为避免不必要的问题，建议全部使用git bash来执行。</p>
+</li>
+<li><p>hexo有2种<code>_config.yml</code>文件，一个是根目录下的全局的<code>_config.yml</code>，一个是各个<code>theme</code>下的<code>_config.yml</code>；</p>
+</li>
+</ul>
+<h3 id="6-1-npm的安装"><a href="#6-1-npm的安装" class="headerlink" title="6.1 npm的安装"></a>6.1 npm的安装</h3><blockquote>
+<p>$ npm install -g hexo</p>
+</blockquote>
+<h3 id="6-2-初始化"><a href="#6-2-初始化" class="headerlink" title="6.2 初始化"></a>6.2 初始化</h3><p>&ensp; &ensp;在电脑的某个地方新建一个名为hexo的文件夹（名字可以随便取,建议就取名hexo，方便以后代码管理），比如我的是E:/hexo，由于这个文件夹将来就作为你存放代码的地方，所以最好不要随便放。</p>
+<p>初始化的方法有两种：</p>
+<p>1、可以随便找个地方右键打开 git bash here，然后输入cd /e/hexo/</p>
+<blockquote>
+<p>$ cd /e/hexo/</p>
+</blockquote>
+<blockquote>
+<p>$ hexo init</p>
+</blockquote>
+<p>2、或者进入你前面创建的E:/hexo的文件夹之后，右键打开 git bash here，直接输入</p>
+<blockquote>
+<p>$ hexo init</p>
+</blockquote>
+<p>&ensp; &ensp;hexo会自动下载一些文件到这个目录，包括node_modules，目录结构如下：</p>
+<blockquote>
+<p>$ hexo g # 生成文件</p>
+</blockquote>
+<blockquote>
+<p>$ hexo s # 启动服务</p>
+</blockquote>
+<p>&ensp; &ensp;执行以上命令之后，hexo就会在public文件夹生成相关html文件，这些文件将来都是要提交到github去的</p>
+<p>hexo s是开启本地预览服务，打开浏览器访问 <code>http://localhost:4000</code> 即可看到内容</p>
+<h3 id="6-3-主题修改-这一步可以不用做，等学会后面的操作之后，再去寻找自己喜欢的主题Theme"><a href="#6-3-主题修改-这一步可以不用做，等学会后面的操作之后，再去寻找自己喜欢的主题Theme" class="headerlink" title="6.3 主题修改(这一步可以不用做，等学会后面的操作之后，再去寻找自己喜欢的主题Theme)"></a>6.3 主题修改(这一步可以不用做，等学会后面的操作之后，再去寻找自己喜欢的主题Theme)</h3><p>&ensp; &ensp;既然默认主题很丑，那我们别的不做，首先来替换一个好看点的主题。这是 官方主题。</p>
+<p>&ensp; &ensp;个人比较喜欢的主题是：hexo-theme-yilia。</p>
+<p>&ensp; &ensp;1、首先下载这个主题：</p>
+<blockquote>
+<p><code>$ cd /e/hexo/（或者进入你前面创建的E:/hexo的文件夹之后，右键打开 git bash here）</code></p>
+</blockquote>
+<blockquote>
+<p><code>$ git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia</code></p>
+</blockquote>
+<p>&ensp; &ensp;2、下载后的主题都在你的hexo的theme里面：</p>
+<p>&ensp; &ensp;3、修改hexo文件夹根目录下的<code>_config.yml</code>（并不是theme里面的某个主题文件夹下的<code>_config.yml</code>）中的theme: landscape改为theme: yilia，然后重新执行hexo g来重新生成。</p>
+<p>&ensp; &ensp;4、如果出现一些莫名其妙的问题，可以先执行hexo clean来清理一下public的内容，然后再来重新生成和发布。（建议每次hexo s -g之前都clean一下，养成一个小习惯）</p>
+<h3 id="6-4-上传操作"><a href="#6-4-上传操作" class="headerlink" title="6.4 上传操作"></a>6.4 上传操作</h3><p>&ensp; &ensp;1、首先安装一个插件：</p>
+<p>&ensp; &ensp;<code>$npm install hexo-deployer-git --save</code></p>
+<p><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/assets/npm.png?versionId=CAEQFxiBgMDA6KCQ7BciIDBlNTM5NmIzMGI3NTRiMDRhMzFhNGUyZGJlYTEzMTE5"></p>
+<p>&ensp; &ensp;因为没有这个插件，你在hexo d的时候会出现错误，其它命令不确定，部署这个命令一定要用git bash。</p>
+<p>&ensp; &ensp;打开你的git bash，cd到你前面创建的hexo文件夹，输入hexo d就会将本次有改动的代码全部提交，没有改动的不会：</p>
+<p>&ensp; &ensp;如果你一切都配置好了，发布上传很容易，一句hexo d就搞定，当然关键还是你要把所有东西配置好。</p>
+<p>&ensp; &ensp;首先，ssh key肯定要配置好。</p>
+<p>&ensp; &ensp;其次，配置hexo根目录中的_config.yml中有关deploy的部分：</p>
+<p>&ensp; &ensp;正确写法：</p>
+<p>&ensp; &ensp;<code>deploy:</code></p>
+<p>&ensp; &ensp;<code>type: git</code></p>
+<p>&ensp; &ensp;<code>repository: git@github.com:pengzihao166/pengzihao166.github.io.git</code></p>
+<p>&ensp; &ensp;<code>branch: master</code></p>
+<p>&ensp; &ensp;错误写法：</p>
+<p>&ensp; &ensp;<code>deploy:</code></p>
+<p>&ensp; &ensp;<code>type: github</code></p>
+<p>&ensp; &ensp;<code>repository: https://github.com/pengzihao166/pengzihao166.github.io.git</code></p>
+<p>&ensp; &ensp;<code>branch: master</code></p>
+<h3 id="6-5-常见hexo命令："><a href="#6-5-常见hexo命令：" class="headerlink" title="6.5 常见hexo命令："></a>6.5 常见hexo命令：</h3><blockquote>
+<p>1、hexo new “postName” #新建文章</p>
+</blockquote>
+<blockquote>
+<p>2、hexo new page “pageName” #新建页面</p>
+</blockquote>
+<blockquote>
+<p>3、hexo generate #生成静态页面至public目录=hexo g</p>
+</blockquote>
+<blockquote>
+<p>4、hexo server #开启预览访问端口（默认端口4000，’ctrl + c’关闭server）=hexo s</p>
+</blockquote>
+<blockquote>
+<p>5、hexo deploy #部署到GitHub  =  hexo d</p>
+</blockquote>
+<blockquote>
+<p>6、hexo help  # 查看帮助</p>
+</blockquote>
+<blockquote>
+<p>7、hexo version  #查看Hexo的版本   =    hexo -v</p>
+</blockquote>
+<blockquote>
+<p>8、hexo s -g #生成并本地预览</p>
+</blockquote>
+<blockquote>
+<p>9、hexo d -g #生成并上传</p>
+</blockquote>
+<p>&ensp; &ensp;注意：如果hexo s 失败，可能是你的hexo根目录下的node_modules文件出问题或者你的端口被占用了，可以试试hexo s -p 5000(这个5000可以改成任何你想的端口数字不唯一)，还是不行那就删掉node_modules，然后在hexo的根目录下git bash here，再输入npm install，会自动重新配置node_modules，这样应该就能解决了。</p>
+<p>&emsp;小编就因为遇到过这种情况，所以在这里分享一下在写完博客之后，运行命令的时候遇到的问题的解决方案。</p>
+<h3 id="6-6-写博客"><a href="#6-6-写博客" class="headerlink" title="6.6 写博客"></a>6.6 写博客</h3><p>&ensp; &ensp;定位到我们的hexo根目录，执行命令：</p>
+<blockquote>
+<p>hexo new  ‘xxx’ (xxx就是你的博客名字)</p>
+</blockquote>
+<blockquote>
+<p>hexo会帮我们在e:/hexo/source/_posts下生成相关md文件：</p>
+</blockquote>
+<p>&ensp; &ensp;我们只需要打开这个文件就可以开始写博客了,具体用什么打开md格式的文件进行编写博客，小编这里使用的是Typora（或者vscode也行）兼容md格式，这个大家可以自己使用喜欢的编辑器就行了，没有什么特殊要求，只要能兼容Markdown格式的就行了。</p>
+<p>&ensp; &ensp;记住奥，每次写完博客记得，在你的hexo根目录下 git bash here，再进行</p>
+<blockquote>
+<p>hexo clean</p>
+</blockquote>
+<blockquote>
+<p>hexo s -g</p>
+</blockquote>
+<p>&ensp; &ensp;进行本地预览要是符合自己想要的样子之后,再进行 </p>
+<blockquote>
+<p>hexo d</p>
+</blockquote>
+<p>&ensp; &ensp;最后打开你的<code>http://pengzihao166.github.io</code>(记得把pengzihao166改成你自己的github的用户名)，如果你绑定了域名你也可以直接输入你自己的域名进入一个属于自己的blog。</p>
+<h2 id="结束语："><a href="#结束语：" class="headerlink" title="结束语："></a>结束语：</h2><p>&ensp; &ensp;这次运用hexo+git搭建博客，不知道你们是否学会了呢，要是内容含任何的错误知识点，请及时联系小编，或者在下方进行评论提出，方便小编及时修改错误，免得对其他小伙伴的学习造成勿扰，当然有什么观点也可以在评论中表达出来，希望大家可以参与到其中来。</p>
+<p>&ensp; &ensp;部分内容转载自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">小茗同学博客园</a>,如有侵权，请立刻联系小编，进行修改完善。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">xiaoba</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://xiaobazeo.github.io/2021/11/29/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Git%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">http://xiaobazeo.github.io/2021/11/29/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Git%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://xiaobazeo.github.io" target="_blank">HUT菜鸟小八的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git-Hexo/">Git+Hexo</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_email"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/01/2107%E7%9A%84%E5%B0%8F%E5%B4%BD%E5%AD%90%E4%BB%AC/"><img class="prev-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/assets/2107.jpg?versionId=CAEQFxiBgIDKvITX6xciIDEyOWRmNjg4MzBkZTQ1MTY4YzBlNjJkM2FkNzExOTVk" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">2107的小崽子们</div></div></a></div><div class="next-post pull-right"><a href="/2021/11/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"><img class="next-cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/gitInterface.png?versionId=CAEQGBiBgIDT0.vF7hciIGE0NWY0NDFhZWEwNTQzY2FhMjkwMzQ3NjczODZkMTkw" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">小八学习git从0到基本运用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/11/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="小八学习git从0到基本运用"><img class="cover" src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/我的第一篇博客/gitInterface.png?versionId=CAEQGBiBgIDT0.vF7hciIGE0NWY0NDFhZWEwNTQzY2FhMjkwMzQ3NjczODZkMTkw" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-28</div><div class="title">小八学习git从0到基本运用</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xiaoba</div><div class="author-info__description">更多请关注微信公众号“小八的编程之路”，那上面会实时更新一些知识经验分享~</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xiaobazeo"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobazeo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:166918502@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">QQ:166918502,有事请注明来意</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">二、准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%BA%94%E7%94%A8%E7%AE%80%E4%BB%8B%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">三、应用简介：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1Node-js"><span class="toc-number">3.1.</span> <span class="toc-text">3.1Node.js:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ensp-ensp-3-1-1-%E7%94%B1%E6%9D%A5%E5%8F%8A%E4%BC%98%E5%8A%BF%EF%BC%9A"><span class="toc-number">3.1.1.</span> <span class="toc-text">   3.1.1 由来及优势：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ensp-ensp-3-1-2-%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-number">3.1.2.</span> <span class="toc-text">   3.1.2 主要功能：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ensp-ensp-3-2-NPM%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">   3.2 NPM：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ensp-ensp-3-3-%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text">   3.3 其他应用：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%90%AD%E5%BB%BAgithub%E5%8D%9A%E5%AE%A2"><span class="toc-number">4.</span> <span class="toc-text">四、搭建github博客</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 创建仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 绑定域名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AESSH-Key"><span class="toc-number">5.</span> <span class="toc-text">五、配置SSH Key</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 测试是否成功</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BD%BF%E7%94%A8hexo%E5%86%99%E5%8D%9A%E5%AE%A2"><span class="toc-number">6.</span> <span class="toc-text">六、使用hexo写博客</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A"><span class="toc-number">6.1.</span> <span class="toc-text">注意：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-npm%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">6.2.</span> <span class="toc-text">6.1 npm的安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">6.3.</span> <span class="toc-text">6.2 初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9-%E8%BF%99%E4%B8%80%E6%AD%A5%E5%8F%AF%E4%BB%A5%E4%B8%8D%E7%94%A8%E5%81%9A%EF%BC%8C%E7%AD%89%E5%AD%A6%E4%BC%9A%E5%90%8E%E9%9D%A2%E7%9A%84%E6%93%8D%E4%BD%9C%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%86%8D%E5%8E%BB%E5%AF%BB%E6%89%BE%E8%87%AA%E5%B7%B1%E5%96%9C%E6%AC%A2%E7%9A%84%E4%B8%BB%E9%A2%98Theme"><span class="toc-number">6.4.</span> <span class="toc-text">6.3 主题修改(这一步可以不用做，等学会后面的操作之后，再去寻找自己喜欢的主题Theme)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E4%B8%8A%E4%BC%A0%E6%93%8D%E4%BD%9C"><span class="toc-number">6.5.</span> <span class="toc-text">6.4 上传操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E5%B8%B8%E8%A7%81hexo%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-number">6.6.</span> <span class="toc-text">6.5 常见hexo命令：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-%E5%86%99%E5%8D%9A%E5%AE%A2"><span class="toc-number">6.7.</span> <span class="toc-text">6.6 写博客</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD%EF%BC%9A"><span class="toc-number">7.</span> <span class="toc-text">结束语：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/mhy-test01/" title="mhy-test01"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mhy-test01"/></a><div class="content"><a class="title" href="/2024/03/10/mhy-test01/" title="mhy-test01">mhy-test01</a><time datetime="2024-03-10T14:20:16.000Z" title="发表于 2024-03-10 22:20:16">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/Java-Deque/" title="Java-Deque"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/img/QQ%E5%9B%BE%E7%89%8720220520012835.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java-Deque"/></a><div class="content"><a class="title" href="/2024/03/10/Java-Deque/" title="Java-Deque">Java-Deque</a><time datetime="2024-03-10T02:44:02.000Z" title="发表于 2024-03-10 10:44:02">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryTwo"/></a><div class="content"><a class="title" href="/2023/12/19/MySQL-summaryTwo/" title="MySQL-summaryTwo">MySQL-summaryTwo</a><time datetime="2023-12-19T05:22:53.000Z" title="发表于 2023-12-19 13:22:53">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/image-20230820104225550.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-summaryOne"/></a><div class="content"><a class="title" href="/2023/12/18/MySQL-summaryOne/" title="MySQL-summaryOne">MySQL-summaryOne</a><time datetime="2023-12-18T07:57:36.000Z" title="发表于 2023-12-18 15:57:36">2023-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution"><img src="https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220720172643.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="web-coursePushErrorSolution"/></a><div class="content"><a class="title" href="/2023/12/12/web-coursePushErrorSolution/" title="web-coursePushErrorSolution">web-coursePushErrorSolution</a><time datetime="2023-12-12T06:38:43.000Z" title="发表于 2023-12-12 14:38:43">2023-12-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://pengzihao166.oss-cn-beijing.aliyuncs.com/blog/git和hexo搭建个人博客/%E5%8D%9A%E5%AE%A2%E5%B0%81%E9%9D%A2.png?versionId=CAEQGBiBgID7ru7F7hciIDEzZTA0MGU2MGFlZTRhYTk5NmU0YWYwNmY3NzUwYWNl')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By xiaoba</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,  welcome  to  my  <a  target="_blank" rel="noopener" href="https://xiaobazeo.com/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'L4hC6khKXGdHXK53aAweTwbM-gzGzoHsz',
+      appKey: 'x6SUHaNHjueSamLFU7ua9UnE',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
