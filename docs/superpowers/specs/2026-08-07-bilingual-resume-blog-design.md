@@ -1,6 +1,6 @@
 # Bilingual Resume Blog Design
 
-**Status:** Approved visual direction; written specification awaiting review
+**Status:** Approved
 
 **Date:** 2026-08-07
 
