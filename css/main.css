@@ -120,7 +120,7 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.15; }
 .section-number { color: var(--burgundy); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; }
 .section-lead { max-width: 68ch; margin: 0; font-size: 1.1rem; }
 .experience-entry__heading { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-6); }
-.experience-entry h3, .education-writing h3 { margin: 0; font-size: 1.25rem; }
+.experience-entry h3 { margin: 0; font-size: 1.25rem; }
 .experience-entry time, .education-block time, .writing-list time { color: var(--muted); white-space: nowrap; }
 .experience-entry ul { max-width: 72ch; margin: var(--space-6) 0 0; padding-left: 1.25rem; }
 .experience-entry li + li { margin-top: var(--space-3); }
@@ -128,7 +128,6 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.15; }
 .impact-list li { display: grid; grid-template-columns: minmax(180px, 0.35fr) minmax(0, 1fr); gap: var(--space-8); padding-block: var(--space-6); border-top: 1px solid var(--rule); }
 .impact-list li:last-child { border-bottom: 1px solid var(--rule); }
 .impact-list h3, .impact-list p { margin: 0; }
-.education-writing { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); }
 .education-block p { margin: var(--space-2) 0; }
 .education-block__school { font-weight: 700; }
 .writing-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-4); padding-block: var(--space-3); border-bottom: 1px solid var(--rule); }
@@ -187,12 +186,11 @@ figure.highlight pre, .post-content pre { margin: 0; padding: var(--space-4); }
   .section-body { margin-left: 90px; }
   .section-heading h2 { font-size: 1.8rem; }
   .section-lead { font-size: 1rem; }
-  .experience-entry h3, .education-writing h3, .impact-list h3 { color: var(--burgundy); font-size: 1.1rem; }
+  .experience-entry h3, .impact-list h3 { color: var(--burgundy); font-size: 1.1rem; }
   .experience-entry ul { max-width: none; margin-top: 12px; font-family: var(--serif); font-size: 0.95rem; line-height: 1.45; }
   .experience-entry li + li { margin-top: 4px; }
   .impact-list li { gap: var(--space-6); padding-block: 2px; }
   .impact-list p { font-family: var(--serif); font-size: 0.9rem; }
-  .education-writing { gap: var(--space-8); }
   .writing-list li { padding-block: 2px; }
   .archive-link { margin-top: 12px; }
   .identity-actions a + a { padding-left: var(--space-6); border-left: 1px solid var(--rule); }
@@ -248,7 +246,8 @@ figure.highlight pre, .post-content pre { margin: 0; padding: var(--space-4); }
   }
   .numbered-section { padding-block: var(--space-8); }
   .section-heading { grid-template-columns: 36px 1fr; margin-bottom: var(--space-6); }
-  .experience-entry__heading, .impact-list li, .education-writing, .writing-list li { display: grid; grid-template-columns: 1fr; gap: var(--space-2); }
+  .experience-entry__heading, .impact-list li { display: grid; grid-template-columns: 1fr; gap: var(--space-2); }
+  .writing-list li { grid-template-columns: 1fr; gap: var(--space-2); }
   .experience-entry time, .writing-list time { white-space: normal; }
   .article-shell, .listing-shell { padding-block: var(--space-12); }
   .article-list li { grid-template-columns: 1fr; gap: var(--space-2); }
