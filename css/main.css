@@ -98,7 +98,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 h1, h2, h3 { font-family: var(--serif); line-height: 1.15; }
 .identity-header h1 { margin: 0; font-size: clamp(3.2rem, 5vw, 5.5rem); letter-spacing: -0.045em; }
-.identity-header__statement { max-width: 66ch; margin: 0; font-family: var(--sans); font-size: clamp(1rem, 1.2vw, 1.15rem); }
 .identity-actions { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: 20px; }
 .action-link {
   min-height: 24px;
