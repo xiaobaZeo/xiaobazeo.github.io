@@ -137,8 +137,11 @@
       for (const link of pagination.querySelectorAll('a')) {
         if (link.classList.contains('prev')) link.textContent = pagination.getAttribute('data-en-prev');
         if (link.classList.contains('next')) link.textContent = pagination.getAttribute('data-en-next');
-        link.setAttribute('href', withEnglishParam(link.getAttribute('href')));
       }
+    }
+    // Keep English mode while moving between archive, tag index, tag pages and their pagination.
+    for (const link of documentRef.querySelectorAll('[data-en-propagate] a')) {
+      link.setAttribute('href', withEnglishParam(link.getAttribute('href')));
     }
     return true;
   }
