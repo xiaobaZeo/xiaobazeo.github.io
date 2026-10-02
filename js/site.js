@@ -114,10 +114,40 @@
     }
   }
 
+  function wantsEnglish(search) {
+    return /(?:^|[?&])lang=en(?:&|$)/u.test(String(search || ''));
+  }
+
+  function withEnglishParam(href) {
+    if (!href || href.charAt(0) !== '/' || wantsEnglish(href.split('#')[0].split('?')[1])) return href;
+    const [base, hash] = href.split('#');
+    const joined = base + (base.includes('?') ? '&' : '?') + 'lang=en';
+    return hash === undefined ? joined : `${joined}#${hash}`;
+  }
+
+  function applyEnglishLabels(documentRef, windowRef) {
+    const search = windowRef && windowRef.location ? windowRef.location.search : '';
+    if (!wantsEnglish(search)) return false;
+    documentRef.documentElement.lang = 'en';
+    for (const element of documentRef.querySelectorAll('[data-en]')) element.textContent = element.getAttribute('data-en');
+    for (const element of documentRef.querySelectorAll('[data-en-label]')) element.setAttribute('aria-label', element.getAttribute('data-en-label'));
+    for (const element of documentRef.querySelectorAll('[data-en-href]')) element.setAttribute('href', element.getAttribute('data-en-href'));
+    const pagination = documentRef.querySelector('.pagination[data-en-prev]');
+    if (pagination) {
+      for (const link of pagination.querySelectorAll('a')) {
+        if (link.classList.contains('prev')) link.textContent = pagination.getAttribute('data-en-prev');
+        if (link.classList.contains('next')) link.textContent = pagination.getAttribute('data-en-next');
+        link.setAttribute('href', withEnglishParam(link.getAttribute('href')));
+      }
+    }
+    return true;
+  }
+
   function init(documentRef, windowRef) {
+    applyEnglishLabels(documentRef, windowRef);
     initMenu(documentRef, windowRef);
     initCodeCopy(documentRef, windowRef);
   }
 
-  return { setMenuState, handleMenuEscape, languageForClasses, copyLabelForLocale, init };
+  return { setMenuState, handleMenuEscape, languageForClasses, copyLabelForLocale, wantsEnglish, withEnglishParam, applyEnglishLabels, init };
 }));
