@@ -86,12 +86,33 @@
     });
     if (media.addEventListener) media.addEventListener('change', sync);
     else media.addListener(sync);
+    // CSS only collapses the mobile menu once this flag proves the toggle works.
+    documentRef.documentElement.classList.add('nav-ready');
+  }
+
+  function codeForFigure(figure) {
+    return figure.querySelector('.code pre') || figure.querySelector('pre');
+  }
+
+  function handleCopyClick(event, documentRef, windowRef) {
+    const target = event && event.target;
+    const button = target && typeof target.closest === 'function' ? target.closest('.copy-code') : null;
+    if (!button) return;
+    const figure = button.closest('figure.highlight');
+    const code = figure ? codeForFigure(figure) : null;
+    if (!code) return;
+    const locale = documentRef.documentElement.lang || 'zh-CN';
+    copyText(code.textContent, documentRef, windowRef.navigator, windowRef).then((copied) => {
+      if (!copied) return;
+      button.textContent = copyLabelForLocale(locale, true);
+      windowRef.setTimeout(() => { button.textContent = copyLabelForLocale(locale, false); }, 1200);
+    });
   }
 
   function initCodeCopy(documentRef, windowRef) {
     const locale = documentRef.documentElement.lang || 'zh-CN';
     for (const figure of documentRef.querySelectorAll('figure.highlight')) {
-      const code = figure.querySelector('.code pre') || figure.querySelector('pre');
+      const code = codeForFigure(figure);
       if (!code || figure.querySelector('.copy-code')) continue;
       const language = languageForClasses(figure.classList);
       if (language) {
@@ -104,14 +125,12 @@
       button.type = 'button';
       button.className = 'copy-code';
       button.textContent = copyLabelForLocale(locale, false);
-      button.addEventListener('click', async () => {
-        const copied = await copyText(code.textContent, documentRef, windowRef.navigator, windowRef);
-        if (!copied) return;
-        button.textContent = copyLabelForLocale(locale, true);
-        windowRef.setTimeout(() => { button.textContent = copyLabelForLocale(locale, false); }, 1200);
-      });
       figure.prepend(button);
     }
+    // One delegated listener for every copy button; the flag keeps repeated init calls from stacking listeners.
+    if (documentRef.resumePaperCopyBound) return;
+    documentRef.resumePaperCopyBound = true;
+    documentRef.addEventListener('click', (event) => handleCopyClick(event, documentRef, windowRef));
   }
 
   function wantsEnglish(search) {
@@ -148,9 +167,11 @@
 
   function init(documentRef, windowRef) {
     applyEnglishLabels(documentRef, windowRef);
+    // The inline head script hides [data-en] text with "en-pending"; reveal once labels are swapped.
+    documentRef.documentElement.classList.remove('en-pending');
     initMenu(documentRef, windowRef);
     initCodeCopy(documentRef, windowRef);
   }
 
-  return { setMenuState, handleMenuEscape, languageForClasses, copyLabelForLocale, wantsEnglish, withEnglishParam, applyEnglishLabels, init };
+  return { setMenuState, handleMenuEscape, languageForClasses, copyLabelForLocale, wantsEnglish, withEnglishParam, applyEnglishLabels, handleCopyClick, initCodeCopy, init };
 }));
