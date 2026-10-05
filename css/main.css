@@ -236,7 +236,8 @@ figure.highlight pre, .post-content pre { margin: 0; padding: var(--space-4); }
   .site-header__inner { min-height: 68px; gap: var(--space-3); flex-wrap: wrap; }
   .site-brand { flex: 1 1 auto; min-width: 0; max-width: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .primary-nav { flex: 0 0 100%; order: 3; margin-left: 0; }
-  .js .primary-nav { flex: 0 0 auto; order: 0; }
+  /* Pull the nav up beside the brand only while the toggle is (about to be) wired; if site.js never runs, the list falls back to its own row. */
+  .nav-pending .primary-nav, .nav-ready .primary-nav, .js .primary-nav--article { flex: 0 0 auto; order: 0; }
   .nav-ready .menu-toggle { width: 44px; height: 44px; display: grid; place-content: center; gap: 5px; padding: 0; color: var(--ink); background: transparent; border: 1px solid var(--rule); }
   .menu-toggle__line { width: 18px; border-top: 1px solid currentColor; }
   .primary-nav__list { flex-wrap: wrap; }

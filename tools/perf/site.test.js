@@ -173,3 +173,34 @@ test('init does not add nav-ready when the menu toggle or list is missing', () =
   site.init(onlyButton, makeWindow());
   assert.strictEqual(onlyButton.documentElement.classList.contains('nav-ready'), false);
 });
+
+function makePre(lineTexts, textContent = lineTexts.join('')) {
+  return {
+    textContent,
+    querySelectorAll: (selector) => (selector === '.line' ? lineTexts.map((text) => ({ textContent: text })) : []),
+  };
+}
+
+test('codeTextForPre joins .line spans with newlines, keeping blank lines and indentation', () => {
+  assert.strictEqual(site.codeTextForPre(makePre(['func main() {', '', '  fmt.Println(1)', '}'])), 'func main() {\n\n  fmt.Println(1)\n}');
+  assert.strictEqual(site.codeTextForPre(makePre(['single'])), 'single');
+});
+
+test('codeTextForPre falls back to innerText, then textContent, when there are no .line spans', () => {
+  assert.strictEqual(site.codeTextForPre({ textContent: 'ab', innerText: 'a\nb', querySelectorAll: () => [] }), 'a\nb');
+  assert.strictEqual(site.codeTextForPre({ textContent: 'plain' }), 'plain');
+});
+
+test('delegated click copies multi-line code with newlines intact', async () => {
+  const figure = makeFigure('go', 'ab');
+  const pre = makePre(['a', 'b']);
+  const baseQuery = figure.querySelector;
+  figure.querySelector = (selector) => (selector === '.code pre' ? pre : baseQuery(selector));
+  const doc = makeDocument({ figures: [figure] });
+  const win = makeWindow();
+  site.init(doc, win);
+  const click = doc.listeners.find((entry) => entry.type === 'click').handler;
+  click({ target: figure.children.find((child) => child.className === 'copy-code') });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepStrictEqual(win.writes, ['a\nb']);
+});

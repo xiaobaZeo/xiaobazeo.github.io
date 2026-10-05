@@ -94,6 +94,13 @@
     return figure.querySelector('.code pre') || figure.querySelector('pre');
   }
 
+  // Hexo separates .line spans with <br>, which textContent drops, so rebuild the newlines per line.
+  function codeTextForPre(pre) {
+    const lines = typeof pre.querySelectorAll === 'function' ? pre.querySelectorAll('.line') : [];
+    if (lines.length) return Array.from(lines, (line) => line.textContent).join('\n');
+    return typeof pre.innerText === 'string' ? pre.innerText : pre.textContent;
+  }
+
   function handleCopyClick(event, documentRef, windowRef) {
     const target = event && event.target;
     const button = target && typeof target.closest === 'function' ? target.closest('.copy-code') : null;
@@ -102,7 +109,7 @@
     const code = figure ? codeForFigure(figure) : null;
     if (!code) return;
     const locale = documentRef.documentElement.lang || 'zh-CN';
-    copyText(code.textContent, documentRef, windowRef.navigator, windowRef).then((copied) => {
+    copyText(codeTextForPre(code), documentRef, windowRef.navigator, windowRef).then((copied) => {
       if (!copied) return;
       button.textContent = copyLabelForLocale(locale, true);
       windowRef.setTimeout(() => { button.textContent = copyLabelForLocale(locale, false); }, 1200);
@@ -173,5 +180,5 @@
     initCodeCopy(documentRef, windowRef);
   }
 
-  return { setMenuState, handleMenuEscape, languageForClasses, copyLabelForLocale, wantsEnglish, withEnglishParam, applyEnglishLabels, handleCopyClick, initCodeCopy, init };
+  return { setMenuState, handleMenuEscape, languageForClasses, copyLabelForLocale, wantsEnglish, withEnglishParam, applyEnglishLabels, handleCopyClick, codeTextForPre, initCodeCopy, init };
 }));
