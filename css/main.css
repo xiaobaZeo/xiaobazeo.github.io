@@ -147,6 +147,30 @@ figure.highlight pre, .post-content pre { margin: 0; padding: var(--space-4); }
 
 
 .site-footer { min-height: 104px; border-top: 1px solid var(--rule); font-size: 0.8rem; }
+.archive-page .site-header__inner, .archive-page .site-footer { width: min(100% - 120px, 1144px); }
+.archive-page .site-brand { font-size: 18px; }
+.archive-page .primary-nav a, .archive-page .language-switch a { font-size: 16px; }
+.archive-page .primary-nav a[aria-current="page"] { color: var(--burgundy); font-weight: 600; border-bottom: 2px solid var(--burgundy); }
+.archive-page .site-footer { min-height: 84px; color: var(--ink); font-size: 14px; }
+.archive-catalog { width: min(100% - 120px, 920px); padding-block: 52px 44px; }
+.archive-catalog__heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; }
+.archive-catalog .archive-catalog__title { font-size: 48px; line-height: 1.2; font-weight: 600; }
+.archive-catalog__count { color: var(--muted); font-size: 24px; white-space: nowrap; }
+.archive-catalog__description { margin: 8px 0 0; color: var(--muted); font-size: 18px; }
+.archive-years { display: flex; flex-wrap: wrap; gap: 8px 36px; margin-top: 28px; border-bottom: 1px solid var(--rule); }
+.archive-years__link { display: inline-flex; min-width: 44px; min-height: 52px; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; }
+.archive-years__link[aria-current="page"] { color: var(--burgundy); font-weight: 600; border-bottom-color: var(--burgundy); }
+.archive-catalog__columns, .archive-catalog .article-list li { display: grid; grid-template-columns: minmax(0, 1fr) 88px; column-gap: 24px; }
+.archive-catalog__columns { margin-top: 32px; color: var(--muted); font-size: 14px; }
+.archive-catalog .article-list { margin-top: 12px; }
+.archive-catalog .article-list li { align-items: center; padding-block: 0; border-top: 0; border-bottom: 1px solid var(--rule); }
+.archive-catalog .article-list li:last-child { padding-bottom: 20px; }
+.archive-catalog .article-list a { grid-column: 1; grid-row: 1; display: flex; align-items: center; min-width: 0; min-height: 46px; font-size: 18px; line-height: 1.5; overflow-wrap: anywhere; text-decoration: none; }
+.archive-catalog .article-list time { grid-column: 2; grid-row: 1; color: var(--muted); font-size: 14px; white-space: nowrap; text-align: right; }
+.archive-catalog__footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; min-height: 64px; padding-top: 8px; }
+.archive-catalog__status { margin: 0; color: var(--muted); font-size: 14px; }
+.archive-catalog .pagination { gap: 0; margin: 0; color: var(--muted); }
+.archive-catalog .pagination .current { border-bottom: 0; }
 @media (min-width: 1200px) {
   :root { --rail: 180px; }
   .article-layout.has-toc { grid-template-columns: minmax(0, 760px) minmax(200px, 240px); justify-content: center; gap: 40px; }
@@ -189,6 +213,19 @@ figure.highlight pre, .post-content pre { margin: 0; padding: var(--space-4); }
   .article-list li { grid-template-columns: 1fr; gap: 8px; }
   .article-list a { min-height: 44px; }
   .site-footer { min-height: 100px; }
+  .archive-page .site-header__inner, .archive-page .site-footer, .archive-catalog { width: calc(100% - 40px); }
+  .archive-catalog { padding-block: 36px; }
+  .archive-catalog__heading { gap: 8px 12px; }
+  .archive-catalog .archive-catalog__title { font-size: 32px; }
+  .archive-catalog__count { font-size: 20px; }
+  .archive-years { column-gap: 12px; margin-top: 24px; }
+  .archive-catalog__columns { margin-top: 24px; }
+  .archive-catalog__columns span:last-child { display: none; }
+  .archive-catalog .article-list li { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: 12px; }
+  .archive-catalog .article-list a { min-height: 44px; font-size: 16px; }
+  .archive-catalog .article-list time { grid-column: 1; grid-row: 2; text-align: left; }
+  .archive-catalog__footer { padding-top: 20px; }
+  .archive-catalog__status { flex-basis: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
