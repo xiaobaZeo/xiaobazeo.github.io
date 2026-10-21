@@ -1,3 +1,10 @@
+https://xiaobazeo.com/en/index.html
+https://xiaobazeo.com/en/projects/agent-workflow/index.html
+https://xiaobazeo.com/en/projects/task-scheduler/index.html
+https://xiaobazeo.com/en/projects/workflow-engine/index.html
+https://xiaobazeo.com/projects/agent-workflow/index.html
+https://xiaobazeo.com/projects/task-scheduler/index.html
+https://xiaobazeo.com/projects/workflow-engine/index.html
 https://xiaobazeo.com/zh-cn/index.html
 https://xiaobazeo.com/2024/03/10/mhy-test01/
 https://xiaobazeo.com/2024/03/10/Java-Deque/

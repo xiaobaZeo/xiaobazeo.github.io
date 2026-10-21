@@ -169,6 +169,9 @@
     for (const link of documentRef.querySelectorAll('[data-en-propagate] a')) {
       link.setAttribute('href', withEnglishParam(link.getAttribute('href')));
     }
+    for (const link of documentRef.querySelectorAll('[data-ui-locale]')) {
+      link.setAttribute('aria-current', link.getAttribute('data-ui-locale') === 'en' ? 'page' : 'false');
+    }
     return true;
   }
 
