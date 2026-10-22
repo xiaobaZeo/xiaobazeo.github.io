@@ -64,20 +64,28 @@ h3 { font-size: 1.125rem; font-weight: 600; }
 .focus-item + .focus-item { border-left: 1px solid var(--rule); padding-left: 32px; }
 .focus-item h3 { margin: 0 0 6px; }
 .focus-item p { margin: 0; color: var(--muted); }
-.experience-body { grid-column: 1 / -1; }
-.experience-entry { display: grid; grid-template-columns: calc(var(--rail) + 24px) minmax(0, 1fr); }
-.experience-entry time { padding-top: 4px; color: var(--muted); font-size: 0.875rem; }
-.experience-detail { border-left: 1px solid var(--rule); padding-left: 32px; }
-.experience-detail h3 { margin: 0; }
-.experience-detail ul { margin: 12px 0 0; padding-left: 20px; color: var(--muted); }
-.experience-detail li + li { margin-top: 8px; }
-.project-list { margin: 0; padding: 0; list-style: none; }
-.project-row { padding-block: 18px; border-top: 1px solid var(--rule); }
-.project-row:first-child { padding-top: 0; border-top: 0; }
+#experience .section-number { grid-column: 1 / -1; grid-row: 1; padding-top: 0; margin-bottom: 12px; }
+#experience .section-heading h2 { grid-column: 1 / -1; grid-row: 2; margin-bottom: 32px; }
+.experience-body { grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); gap: 40px; }
+.experience-employer { min-width: 0; padding-right: 40px; border-right: 1px solid var(--rule); }
+.experience-company { margin: 0 0 6px; font-size: 1.5rem; }
+.experience-department, .experience-role { margin: 0; }
+.experience-department { color: var(--muted); }
+.experience-role { font-weight: 600; }
+.experience-meta { margin: 24px 0; padding-block: 20px; border-top: 2px solid var(--burgundy); border-bottom: 1px solid var(--rule); }
+.experience-meta > div { display: grid; gap: 4px; }
+.experience-meta dt { color: var(--muted); font-size: 0.8rem; }
+.experience-meta dd { margin: 0; }
+.experience-meta time { font-size: 1rem; }
+.experience-summary { margin: 0; color: var(--muted); line-height: 1.65; }
+.experience-projects { min-width: 0; }
+.experience-projects__title { margin: 0 0 18px; color: var(--muted); }
+.project-list { margin: 0; padding: 0 0 0 34px; list-style: none; border-left: 1px solid var(--rule); }
+.project-row { position: relative; padding: 0 0 30px; }
+.project-row::before { position: absolute; top: 5px; left: -41px; width: 14px; height: 14px; content: ""; background: var(--paper); border: 2px solid var(--burgundy); border-radius: 50%; }
 .project-row:last-child { padding-bottom: 0; }
-.project-copy h3 { margin: 0 0 6px; }
-.project-copy p { margin: 0; color: var(--muted); line-height: 1.55; }
-.project-copy .project-result { margin: 6px 0 0; color: var(--burgundy); font-weight: 600; }
+.project-row h3 { margin: 0 0 8px; }
+.project-row p { margin: 0; color: var(--muted); font-weight: 400; line-height: 1.65; overflow-wrap: anywhere; }
 #opensource { padding-bottom: 16px; }
 .opensource-heading { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 6px; }
 .opensource-heading h3 { margin: 0; }
@@ -178,6 +186,8 @@ figure.highlight pre, .post-content pre { margin: 0; padding: var(--space-4); }
 }
 @media (min-width: 768px) and (max-width: 1199px) {
   .identity-intro { grid-template-columns: minmax(0, 1fr) 232px; gap: 32px; }
+  .experience-body { gap: 32px; }
+  .experience-employer { padding-right: 32px; }
 }
 @media (max-width: 767px) {
   body { font-size: 15px; }
@@ -202,9 +212,11 @@ figure.highlight pre, .post-content pre { margin: 0; padding: var(--space-4); }
   .section-body { grid-column: 1; }
   .focus-grid { grid-template-columns: 1fr; gap: 20px; }
   .focus-item + .focus-item { border-left: 0; border-top: 1px solid var(--rule); padding: 20px 0 0; }
-  .experience-entry { grid-template-columns: 1fr; gap: 16px; }
-  .experience-detail { padding-left: 16px; }
-  .project-row { padding-block: 20px; }
+  .experience-body { grid-template-columns: 1fr; gap: 28px; }
+  .experience-employer { padding: 0 0 28px; border-right: 0; border-bottom: 1px solid var(--rule); }
+  .project-list { padding-left: 28px; }
+  .project-row { padding-bottom: 24px; }
+  .project-row::before { left: -35px; }
   .writing-list li { grid-template-columns: 1fr; gap: 4px; padding-block: 12px; }
   .writing-list a { display: inline-flex; align-items: center; min-height: 44px; }
   .writing-list time { white-space: normal; font-size: 0.8rem; }
